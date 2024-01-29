@@ -181,7 +181,7 @@ import {
   ExcalidrawIframeLikeElement,
   IframeData,
   ExcalidrawIframeElement,
-  ExcalidrawEmbeddableElement,
+  ExcalidrawEmbeddableElement, ExcalidrawRectangleElement,
 } from "../element/types";
 import { getCenter, getDistance } from "../gesture";
 import {
@@ -5591,6 +5591,33 @@ class App extends React.Component<AppProps, AppState> {
       );
     } else if (this.state.activeTool.type === "custom") {
       setCursorForShape(this.interactiveCanvas, this.state);
+    } else if (this.state.activeTool.type === "sticker") {
+
+      let { x: sceneX, y: sceneY } = viewportCoordsToSceneCoords(
+          event,
+          this.state,
+      );
+
+      const sticker = newElement({
+        type:  "rectangle",
+        x: sceneX,
+        y: sceneY,
+        width: 200,
+        height: 200,
+        strokeColor: this.state.currentItemStrokeColor,
+        backgroundColor: "#ffec99",
+        opacity: this.state.currentItemOpacity,
+      });
+
+      this.scene.addNewElement(sticker)
+
+      this.startTextEditing({
+        sceneX: sceneX + 100,
+        sceneY: sceneY + 100,
+        insertAtParentCenter: true,
+        container:  sticker as ExcalidrawRectangleElement,
+      });
+
     } else if (
       this.state.activeTool.type === TOOL_TYPE.frame ||
       this.state.activeTool.type === TOOL_TYPE.magicframe
