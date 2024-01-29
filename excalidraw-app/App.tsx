@@ -26,7 +26,6 @@ import {
   defaultLang,
   LiveCollaborationTrigger,
   TTDDialog,
-  TTDDialogTrigger,
 } from "../packages/excalidraw/index";
 import {
   AppState,
@@ -831,7 +830,7 @@ const ExcalidrawWrapper = () => {
             }
           }}
         />
-        <TTDDialogTrigger />
+        {/*<TTDDialogTrigger />*/}
         {isCollaborating && isOffline && (
           <div className="collab-offline-warning">
             {t("alerts.collabOfflineWarning")}

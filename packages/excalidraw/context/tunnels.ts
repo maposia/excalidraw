@@ -3,7 +3,7 @@ import tunnel from "tunnel-rat";
 
 export type Tunnel = ReturnType<typeof tunnel>;
 
-type TunnelsContextValue = {
+type  TunnelsContextValue = {
   MainMenuTunnel: Tunnel;
   WelcomeScreenMenuHintTunnel: Tunnel;
   WelcomeScreenToolbarHintTunnel: Tunnel;
