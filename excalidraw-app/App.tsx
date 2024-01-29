@@ -92,7 +92,6 @@ import {
   useHandleLibrary,
 } from "../packages/excalidraw/data/library";
 import { AppMainMenu } from "./components/AppMainMenu";
-import { AppWelcomeScreen } from "./components/AppWelcomeScreen";
 import { AppFooter } from "./components/AppFooter";
 import { atom, Provider, useAtom, useAtomValue } from "jotai";
 import { useAtomWithInitialValue } from "../packages/excalidraw/jotai";
@@ -751,10 +750,10 @@ const ExcalidrawWrapper = () => {
           isCollaborating={isCollaborating}
           isCollabEnabled={!isCollabDisabled}
         />
-        <AppWelcomeScreen
-          setCollabDialogShown={setCollabDialogShown}
-          isCollabEnabled={!isCollabDisabled}
-        />
+        {/*<AppWelcomeScreen*/}
+        {/*  setCollabDialogShown={setCollabDialogShown}*/}
+        {/*  isCollabEnabled={!isCollabDisabled}*/}
+        {/*/>*/}
         <OverwriteConfirmDialog>
           <OverwriteConfirmDialog.Actions.ExportToImage />
           <OverwriteConfirmDialog.Actions.SaveToDisk />
