@@ -8,6 +8,7 @@ import {
   LineIcon,
   RectangleIcon,
   SelectionIcon,
+  StickerIcon,
   TextIcon,
 } from "./components/icons";
 import { KEYS } from "./keys";
@@ -81,6 +82,13 @@ export const SHAPES = [
     value: "eraser",
     key: KEYS.E,
     numericKey: KEYS["0"],
+    fillable: false,
+  },
+  {
+    icon: StickerIcon,
+    value: "sticker",
+    key: KEYS.S,
+    numericKey: null,
     fillable: false,
   },
 ] as const;

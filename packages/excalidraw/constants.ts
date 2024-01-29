@@ -370,6 +370,7 @@ export const TOOL_TYPE = {
   eraser: "eraser",
   hand: "hand",
   frame: "frame",
+  sticker: "sticker",
   magicframe: "magicframe",
   embeddable: "embeddable",
   laser: "laser",

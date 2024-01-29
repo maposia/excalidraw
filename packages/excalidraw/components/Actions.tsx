@@ -249,7 +249,7 @@ export const ShapesSwitcher = ({
         const letter =
           key && capitalizeString(typeof key === "string" ? key : key[0]);
         const shortcut = letter
-          ? `${letter} ${t("helpDialog.or")} ${numericKey}`
+            ?  `${letter} ${numericKey ? `${t("helpDialog.or")} ${numericKey}` : ""}  `
           : `${numericKey}`;
         return (
           <ToolButton

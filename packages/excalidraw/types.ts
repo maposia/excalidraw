@@ -109,6 +109,7 @@ export type ToolType =
   | "eraser"
   | "hand"
   | "frame"
+  | "sticker"
   | "magicframe"
   | "embeddable"
   | "laser";
