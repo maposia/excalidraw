@@ -78,9 +78,9 @@ const Footer = ({
       >
         <div style={{ position: "relative" }}>
           {renderWelcomeScreen && <WelcomeScreenHelpHintTunnel.Out />}
-          <HelpButton
-            onClick={() => actionManager.executeAction(actionShortcuts)}
-          />
+          {/*<HelpButton*/}
+          {/*  onClick={() => actionManager.executeAction(actionShortcuts)}*/}
+          {/*/>*/}
         </div>
       </div>
       <ExitZenModeAction
