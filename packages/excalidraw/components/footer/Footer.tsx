@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import { actionShortcuts } from "../../actions";
 import { ActionManager } from "../../actions/manager";
 import {
   ExitZenModeAction,
@@ -9,7 +8,6 @@ import {
 } from "../Actions";
 import { useDevice } from "../App";
 import { useTunnels } from "../../context/tunnels";
-import { HelpButton } from "../HelpButton";
 import { Section } from "../Section";
 import Stack from "../Stack";
 import { UIAppState } from "../../types";

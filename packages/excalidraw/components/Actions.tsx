@@ -30,16 +30,10 @@ import {
 import "./Actions.scss";
 import DropdownMenu from "./dropdownMenu/DropdownMenu";
 import {
-  EmbedIcon,
   extraToolsIcon,
-  frameToolIcon,
-  mermaidLogoIcon,
   laserPointerToolIcon,
-  OpenAIIcon,
-  MagicIcon,
 } from "./icons";
 import { KEYS } from "../keys";
-import { useTunnels } from "../context/tunnels";
 
 export const SelectedShapeActions = ({
   appState,
@@ -232,7 +226,7 @@ export const ShapesSwitcher = ({
   const laserToolSelected = activeTool.type === "laser";
   const embeddableToolSelected = activeTool.type === "embeddable";
 
-  const { TTDDialogTriggerTunnel } = useTunnels();
+  // const { TTDDialogTriggerTunnel } = useTunnels();
 
   return (
     <>
@@ -308,23 +302,6 @@ export const ShapesSwitcher = ({
           onSelect={() => setIsExtraToolsMenuOpen(false)}
           className="App-toolbar__extra-tools-dropdown"
         >
-          {/*<DropdownMenu.Item*/}
-          {/*  onSelect={() => app.setActiveTool({ type: "frame" })}*/}
-          {/*  icon={frameToolIcon}*/}
-          {/*  shortcut={KEYS.F.toLocaleUpperCase()}*/}
-          {/*  data-testid="toolbar-frame"*/}
-          {/*  selected={frameToolSelected}*/}
-          {/*>*/}
-          {/*  {t("toolBar.frame")}*/}
-          {/*</DropdownMenu.Item>*/}
-          {/*<DropdownMenu.Item*/}
-          {/*  onSelect={() => app.setActiveTool({ type: "embeddable" })}*/}
-          {/*  icon={EmbedIcon}*/}
-          {/*  data-testid="toolbar-embeddable"*/}
-          {/*  selected={embeddableToolSelected}*/}
-          {/*>*/}
-          {/*  {t("toolBar.embeddable")}*/}
-          {/*</DropdownMenu.Item>*/}
           <DropdownMenu.Item
             onSelect={() => app.setActiveTool({ type: "laser" })}
             icon={laserPointerToolIcon}
@@ -337,34 +314,7 @@ export const ShapesSwitcher = ({
           {/*<div style={{ margin: "6px 0", fontSize: 14, fontWeight: 600 }}>*/}
           {/*  Generate*/}
           {/*</div>*/}
-          {app.props.aiEnabled !== false && <TTDDialogTriggerTunnel.Out />}
-
-          {/*{app.props.aiEnabled !== false && (*/}
-          {/*  <>*/}
-          {/*    <DropdownMenu.Item*/}
-          {/*      onSelect={() => app.onMagicframeToolSelect()}*/}
-          {/*      icon={MagicIcon}*/}
-          {/*      data-testid="toolbar-magicframe"*/}
-          {/*    >*/}
-          {/*      {t("toolBar.magicframe")}*/}
-          {/*      <DropdownMenu.Item.Badge>AI</DropdownMenu.Item.Badge>*/}
-          {/*    </DropdownMenu.Item>*/}
-          {/*    <DropdownMenu.Item*/}
-          {/*      onSelect={() => {*/}
-          {/*        trackEvent("ai", "open-settings", "d2c");*/}
-          {/*        app.setOpenDialog({*/}
-          {/*          name: "settings",*/}
-          {/*          source: "settings",*/}
-          {/*          tab: "diagram-to-code",*/}
-          {/*        });*/}
-          {/*      }}*/}
-          {/*      icon={OpenAIIcon}*/}
-          {/*      data-testid="toolbar-magicSettings"*/}
-          {/*    >*/}
-          {/*      {t("toolBar.magicSettings")}*/}
-          {/*    </DropdownMenu.Item>*/}
-          {/*  </>*/}
-          {/*)}*/}
+          {/*{app.props.aiEnabled !== false && <TTDDialogTriggerTunnel.Out />}*/}
         </DropdownMenu.Content>
       </DropdownMenu>
     </>

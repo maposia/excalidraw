@@ -19,7 +19,7 @@ import {
   UIAppState,
   AppClassProperties,
 } from "../types";
-import { capitalizeString, isShallowEqual } from "../utils";
+import {  isShallowEqual } from "../utils";
 import { SelectedShapeActions, ShapesSwitcher } from "./Actions";
 import { ErrorDialog } from "./ErrorDialog";
 import { ImageExportDialog } from "./ImageExportDialog";
@@ -31,7 +31,6 @@ import { LockButton } from "./LockButton";
 import { MobileMenu } from "./MobileMenu";
 import { PasteChartDialog } from "./PasteChartDialog";
 import { Section } from "./Section";
-import { HelpDialog } from "./HelpDialog";
 import Stack from "./Stack";
 import { UserList } from "./UserList";
 import { JSONExportDialog } from "./JSONExportDialog";
@@ -50,7 +49,6 @@ import { OverwriteConfirmDialog } from "./OverwriteConfirm/OverwriteConfirm";
 import { HandButton } from "./HandButton";
 import { isHandToolActive } from "../appState";
 import { TunnelsContext, useInitializeTunnels } from "../context/tunnels";
-import { LibraryIcon } from "./icons";
 import { UIAppStateContext } from "../context/ui-appState";
 import { DefaultSidebar } from "./DefaultSidebar";
 import { EyeDropper, activeEyeDropperAtom } from "./EyeDropper";
@@ -61,8 +59,6 @@ import { mutateElement } from "../element/mutateElement";
 import { ShapeCache } from "../scene/ShapeCache";
 import Scene from "../scene/Scene";
 import { LaserPointerButton } from "./LaserPointerButton";
-import { MagicSettings } from "./MagicSettings";
-import { TTDDialog } from "./TTDDialog/TTDDialog";
 
 interface LayerUIProps {
   actionManager: ActionManager;
@@ -148,10 +144,6 @@ const LayerUI = ({
   children,
   app,
   isCollaborating,
-  openAIKey,
-  isOpenAIKeyPersisted,
-  onOpenAIAPIKeyChange,
-  onMagicSettingsConfirm,
 }: LayerUIProps) => {
   const device = useDevice();
   const tunnels = useInitializeTunnels();
@@ -402,7 +394,6 @@ const LayerUI = ({
       {/*  {t("toolBar.library")}*/}
       {/*</DefaultSidebar.Trigger>*/}
       <DefaultOverwriteConfirmDialog />
-      {appState.openDialog?.name === "ttd" && <TTDDialog __fallback />}
       {/* ------------------------------------------------------------------ */}
 
       {appState.isLoading && <LoadingMessage delay={250} />}
@@ -456,32 +447,6 @@ const LayerUI = ({
               return state?.keepOpenOnAlt && event.altKey ? state : null;
             });
             eyeDropperState?.onSelect?.(color, event);
-          }}
-        />
-      )}
-      {appState.openDialog?.name === "help" && (
-        <HelpDialog
-          onClose={() => {
-            setAppState({ openDialog: null });
-          }}
-        />
-      )}
-      {appState.openDialog?.name === "settings" && (
-        <MagicSettings
-          openAIKey={openAIKey}
-          isPersisted={isOpenAIKeyPersisted}
-          onChange={onOpenAIAPIKeyChange}
-          onConfirm={(apiKey, shouldPersist) => {
-            const source =
-              appState.openDialog?.name === "settings"
-                ? appState.openDialog?.source
-                : "settings";
-            setAppState({ openDialog: null }, () => {
-              onMagicSettingsConfirm(apiKey, shouldPersist, source);
-            });
-          }}
-          onClose={() => {
-            setAppState({ openDialog: null });
           }}
         />
       )}
