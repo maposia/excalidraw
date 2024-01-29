@@ -243,6 +243,7 @@
     "ellipse": "Ellipse",
     "arrow": "Arrow",
     "line": "Line",
+    "sticker": "Sticker" ,
     "freedraw": "Draw",
     "text": "Text",
     "library": "Library",
