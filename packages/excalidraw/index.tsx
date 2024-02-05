@@ -22,6 +22,7 @@ polyfill();
 
 const ExcalidrawBase = (props: ExcalidrawProps) => {
   const {
+    isAdmin,
     onChange,
     initialData,
     excalidrawAPI,
@@ -115,6 +116,7 @@ const ExcalidrawBase = (props: ExcalidrawProps) => {
           libraryReturnUrl={libraryReturnUrl}
           theme={theme}
           name={name}
+          isAdmin={isAdmin}
           authorId={authorId}
           renderCustomStats={renderCustomStats}
           UIOptions={UIOptions}

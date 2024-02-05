@@ -100,9 +100,9 @@ const DefaultMainMenu: React.FC<{
       {/*/!* FIXME we should to test for this inside the item itself *!/*/}
       {/*{UIOptions.canvasActions.export && <MainMenu.DefaultItems.Export />}*/}
       {/*/!* FIXME we should to test for this inside the item itself *!/*/}
-      {/*{UIOptions.canvasActions.saveAsImage && (*/}
-      {/*  <MainMenu.DefaultItems.SaveAsImage />*/}
-      {/*)}*/}
+      {UIOptions.canvasActions.saveAsImage && (
+        <MainMenu.DefaultItems.SaveAsImage />
+      )}
       {/*<MainMenu.DefaultItems.Help />*/}
       <MainMenu.DefaultItems.ClearCanvas />
       <MainMenu.Separator />
@@ -376,7 +376,7 @@ const LayerUI = ({
       {/* render component fallbacks. Can be rendered anywhere as they'll be
           tunneled away. We only render tunneled components that actually
         have defaults when host do not render anything. */}
-      <DefaultMainMenu UIOptions={UIOptions} />
+      {app.props.isAdmin && <DefaultMainMenu UIOptions={UIOptions} />}
       {/*<DefaultSidebar.Trigger*/}
       {/*  __fallback*/}
       {/*  icon={LibraryIcon}*/}

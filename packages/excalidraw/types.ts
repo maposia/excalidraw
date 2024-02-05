@@ -404,6 +404,7 @@ export type OnUserFollowedPayload = {
 };
 
 export interface ExcalidrawProps {
+  isAdmin?: boolean;
   authorId?: string | null | undefined,
   onChange?: (
     elements: readonly ExcalidrawElement[],

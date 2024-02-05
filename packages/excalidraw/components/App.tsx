@@ -620,7 +620,6 @@ class App extends React.Component<AppProps, AppState> {
       objectsSnapModeEnabled = false,
       theme = defaultAppState.theme,
       name = defaultAppState.name,
-      authorId
     } = props;
     this.state = {
       ...defaultAppState,
@@ -5605,8 +5604,8 @@ class App extends React.Component<AppProps, AppState> {
         type:  "rectangle",
         x: sceneX,
         y: sceneY,
-        width: 200,
-        height: 200,
+        width: 140,
+        height: 140,
         strokeColor: this.state.currentItemStrokeColor,
         backgroundColor: "#ffec99",
         opacity: this.state.currentItemOpacity,
@@ -9234,21 +9233,40 @@ class App extends React.Component<AppProps, AppState> {
         ];
       }
 
+      if(this.props.isAdmin){
+        return [
+          actionPaste,
+          CONTEXT_MENU_SEPARATOR,
+          // actionCopyAsPng,
+          // actionCopyAsSvg,
+          copyText,
+          CONTEXT_MENU_SEPARATOR,
+          actionSelectAll,
+          actionUnlockAllElements,
+          CONTEXT_MENU_SEPARATOR,
+          actionToggleGridMode,
+          actionToggleObjectsSnapMode,
+          actionToggleZenMode,
+          actionToggleViewMode,
+          // actionToggleStats,
+        ]
+      }
+
       return [
         actionPaste,
         CONTEXT_MENU_SEPARATOR,
-        actionCopyAsPng,
-        actionCopyAsSvg,
+        // actionCopyAsPng,
+        // actionCopyAsSvg,
         copyText,
         CONTEXT_MENU_SEPARATOR,
         actionSelectAll,
         actionUnlockAllElements,
-        CONTEXT_MENU_SEPARATOR,
-        actionToggleGridMode,
-        actionToggleObjectsSnapMode,
-        actionToggleZenMode,
-        actionToggleViewMode,
-        actionToggleStats,
+        // CONTEXT_MENU_SEPARATOR,
+        // actionToggleGridMode,
+        // actionToggleObjectsSnapMode,
+        // actionToggleZenMode,
+        // actionToggleViewMode,
+        // actionToggleStats,
       ];
     }
 
@@ -9261,14 +9279,15 @@ class App extends React.Component<AppProps, AppState> {
       return [actionCopy, ...options];
     }
 
+
     return [
       actionCut,
       actionCopy,
       actionPaste,
-      actionSelectAllElementsInFrame,
-      actionRemoveAllElementsFromFrame,
+      // actionSelectAllElementsInFrame,
+      // actionRemoveAllElementsFromFrame,
       CONTEXT_MENU_SEPARATOR,
-      ...options,
+      // ...options,
       CONTEXT_MENU_SEPARATOR,
       actionCopyStyles,
       actionPasteStyles,
@@ -9279,7 +9298,7 @@ class App extends React.Component<AppProps, AppState> {
       actionWrapTextInContainer,
       actionUngroup,
       CONTEXT_MENU_SEPARATOR,
-      actionAddToLibrary,
+      // actionAddToLibrary,
       CONTEXT_MENU_SEPARATOR,
       actionSendBackward,
       actionBringForward,
