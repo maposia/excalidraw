@@ -122,6 +122,7 @@ const addFrameLabelsAsTextElements = (
         magicFrameIndex++;
       }
       let textElement: Mutable<ExcalidrawTextElement> = newTextElement({
+        authorId: 'maposia',
         x: element.x,
         y: element.y - FRAME_STYLE.nameOffsetY,
         fontFamily: FONT_FAMILY.Assistant,

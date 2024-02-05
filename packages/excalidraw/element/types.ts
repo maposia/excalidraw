@@ -27,6 +27,7 @@ export type VerticalAlign = typeof VERTICAL_ALIGN[VerticalAlignKeys];
 
 type _ExcalidrawElementBase = Readonly<{
   id: string;
+  authorId: string | null | undefined;
   x: number;
   y: number;
   strokeColor: string;

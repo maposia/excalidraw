@@ -286,7 +286,6 @@ export interface AppState {
   theme: Theme;
   gridSize: number | null;
   viewModeEnabled: boolean;
-
   /** top-most selected groups (i.e. does not include nested groups) */
   selectedGroupIds: { [groupId: string]: boolean };
   /** group being edited when you drill down to its constituent element
@@ -405,6 +404,7 @@ export type OnUserFollowedPayload = {
 };
 
 export interface ExcalidrawProps {
+  authorId?: string | null | undefined,
   onChange?: (
     elements: readonly ExcalidrawElement[],
     appState: AppState,

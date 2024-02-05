@@ -104,6 +104,7 @@ import Trans from "../packages/excalidraw/components/Trans";
 
 polyfill();
 
+// @ts-ignore
 window.EXCALIDRAW_THROTTLE_RENDER = true;
 
 let isSelfEmbedding = false;
@@ -695,6 +696,7 @@ const ExcalidrawWrapper = () => {
         initialData={initialStatePromiseRef.current.promise}
         isCollaborating={isCollaborating}
         onPointerUpdate={collabAPI?.onPointerUpdate}
+        // langCode='ru-RU'
         UIOptions={{
           canvasActions: {
             toggleTheme: true,
@@ -731,6 +733,7 @@ const ExcalidrawWrapper = () => {
         onLibraryChange={onLibraryChange}
         autoFocus={true}
         theme={theme}
+        authorId="maposia"
         renderTopRightUI={(isMobile) => {
           if (isMobile || !collabAPI || isCollabDisabled) {
             return null;

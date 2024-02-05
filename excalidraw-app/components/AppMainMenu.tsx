@@ -1,6 +1,5 @@
 import React from "react";
 import { MainMenu } from "../../packages/excalidraw/index";
-
 export const AppMainMenu: React.FC<{
   setCollabDialogShown: (toggle: boolean) => any;
   isCollaborating: boolean;

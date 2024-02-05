@@ -620,6 +620,7 @@ class App extends React.Component<AppProps, AppState> {
       objectsSnapModeEnabled = false,
       theme = defaultAppState.theme,
       name = defaultAppState.name,
+      authorId
     } = props;
     this.state = {
       ...defaultAppState,
@@ -634,7 +635,6 @@ class App extends React.Component<AppProps, AppState> {
       width: window.innerWidth,
       height: window.innerHeight,
     };
-
     this.id = nanoid();
     this.library = new Library(this);
     this.actionManager = new ActionManager(
@@ -1415,7 +1415,6 @@ class App extends React.Component<AppProps, AppState> {
   public render() {
     const selectedElements = this.scene.getSelectedElements(this.state);
     const { renderTopRightUI, renderCustomStats } = this.props;
-
     const versionNonce = this.scene.getVersionNonce();
     const { elementsMap, visibleElements } =
       this.renderer.getRenderableElements({
@@ -2023,6 +2022,7 @@ class App extends React.Component<AppProps, AppState> {
           height: maxY - minY + padding * 2,
           opacity: 100,
           locked: false,
+          authorId: this.props.authorId,
         });
 
         this.scene.addNewElement(frame);
@@ -2362,6 +2362,7 @@ class App extends React.Component<AppProps, AppState> {
   };
 
   public async componentDidMount() {
+    // await this.updateLanguage()
     this.unmounted = false;
     this.excalidrawContainerValue.container =
       this.excalidrawContainerRef.current;
@@ -3182,7 +3183,6 @@ class App extends React.Component<AppProps, AppState> {
       });
     }
   };
-
   // TODO rewrite this to paste both text & images at the same time if
   // pasted data contains both
   private async addElementsFromMixedContentPaste(
@@ -3313,6 +3313,7 @@ class App extends React.Component<AppProps, AppState> {
             text,
             lineHeight,
             frameId: topLayerFrame ? topLayerFrame.id : null,
+            authorId: this.props.authorId,
           });
           acc.push(element);
           currentY += element.height + LINE_GAP;
@@ -4461,7 +4462,6 @@ class App extends React.Component<AppProps, AppState> {
       x: sceneX,
       y: sceneY,
     });
-
     const element = existingTextElement
       ? existingTextElement
       : newTextElement({
@@ -4492,6 +4492,7 @@ class App extends React.Component<AppProps, AppState> {
           lineHeight,
           angle: container?.angle ?? 0,
           frameId: topLayerFrame ? topLayerFrame.id : null,
+          authorId: this.props.authorId,
         });
 
     if (!existingTextElement && shouldBindToContainer && container) {
@@ -5156,6 +5157,7 @@ class App extends React.Component<AppProps, AppState> {
     const processElements = (elements: ExcalidrawElement[]) => {
       for (const element of elements) {
         if (element.locked) {
+          // блокировка стирания элемента
           return;
         }
 
@@ -5599,6 +5601,7 @@ class App extends React.Component<AppProps, AppState> {
       );
 
       const sticker = newElement({
+        authorId: this.props.authorId,
         type:  "rectangle",
         x: sceneX,
         y: sceneY,
@@ -5608,9 +5611,8 @@ class App extends React.Component<AppProps, AppState> {
         backgroundColor: "#ffec99",
         opacity: this.state.currentItemOpacity,
       });
-
       this.scene.addNewElement(sticker)
-
+      console.log(sticker)
       this.startTextEditing({
         sceneX: sceneX + 100,
         sceneY: sceneY + 100,
@@ -6393,6 +6395,7 @@ class App extends React.Component<AppProps, AppState> {
       simulatePressure: event.pressure === 0.5,
       locked: false,
       frameId: topLayerFrame ? topLayerFrame.id : null,
+      authorId: this.props.authorId,
     });
 
     this.setState((prevState) => {
@@ -6464,6 +6467,7 @@ class App extends React.Component<AppProps, AppState> {
       locked: false,
       width,
       height,
+      authorId: this.props.authorId,
     });
 
     this.scene.replaceAllElements([
@@ -6518,6 +6522,7 @@ class App extends React.Component<AppProps, AppState> {
       width: embedLink.intrinsicSize.w,
       height: embedLink.intrinsicSize.h,
       link,
+      authorId: this.props.authorId,
     });
 
     this.scene.replaceAllElements([
@@ -6566,6 +6571,7 @@ class App extends React.Component<AppProps, AppState> {
       opacity: this.state.currentItemOpacity,
       locked: false,
       frameId: topLayerFrame ? topLayerFrame.id : null,
+      authorId: this.props.authorId,
     });
 
     return element;
@@ -6666,6 +6672,7 @@ class App extends React.Component<AppProps, AppState> {
         endArrowhead,
         locked: false,
         frameId: topLayerFrame ? topLayerFrame.id : null,
+        authorId: this.props.authorId,
       });
       this.setState((prevState) => {
         const nextSelectedElementIds = {
@@ -6745,6 +6752,7 @@ class App extends React.Component<AppProps, AppState> {
       roundness: this.getCurrentItemRoundness(elementType),
       locked: false,
       frameId: topLayerFrame ? topLayerFrame.id : null,
+      authorId: this.props.authorId,
     } as const;
 
     let element;
@@ -6793,6 +6801,7 @@ class App extends React.Component<AppProps, AppState> {
       opacity: this.state.currentItemOpacity,
       locked: false,
       ...FRAME_STYLE,
+      authorId: this.props.authorId,
     } as const;
 
     const frame =

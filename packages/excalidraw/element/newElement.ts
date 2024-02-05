@@ -73,6 +73,7 @@ export type ElementConstructorOpts = MarkOptional<
 const _newElementBase = <T extends ExcalidrawElement>(
   type: T["type"],
   {
+   authorId = null,
     x,
     y,
     strokeColor = DEFAULT_ELEMENT_PROPS.strokeColor,
@@ -113,6 +114,7 @@ const _newElementBase = <T extends ExcalidrawElement>(
     groupIds,
     frameId,
     roundness,
+    authorId,
     seed: rest.seed ?? randomInteger(),
     version: rest.version || 1,
     versionNonce: rest.versionNonce ?? 0,

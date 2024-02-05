@@ -9,7 +9,7 @@ const mouse = new Pointer("mouse");
 
 describe("element locking", () => {
   it("should not show unlockAllElements action in contextMenu if no elements locked", async () => {
-    await render(<Excalidraw />);
+    await render(<Excalidraw  />);
 
     mouse.rightClickAt(0, 0);
 

@@ -193,6 +193,7 @@ export default function App({ appTitle, useCustom, customArgs }: AppProps) {
             fillStyle: "hachure",
             strokeWidth: 1,
             strokeStyle: "solid",
+            authorId: "maposia",
             roughness: 1,
             angle: 0,
             x: 100.50390625,

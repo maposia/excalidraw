@@ -504,6 +504,7 @@ export const convertToExcalidrawElements = (
         const width = element.width || DEFAULT_LINEAR_ELEMENT_PROPS.width;
         const height = element.height || DEFAULT_LINEAR_ELEMENT_PROPS.height;
         excalidrawElement = newLinearElement({
+          authorId: 'maposia',
           width,
           height,
           points: [
@@ -519,6 +520,7 @@ export const convertToExcalidrawElements = (
         const width = element.width || DEFAULT_LINEAR_ELEMENT_PROPS.width;
         const height = element.height || DEFAULT_LINEAR_ELEMENT_PROPS.height;
         excalidrawElement = newLinearElement({
+          authorId: 'maposia',
           width,
           height,
           endArrowhead: "arrow",
@@ -549,6 +551,7 @@ export const convertToExcalidrawElements = (
         );
 
         excalidrawElement = newTextElement({
+          authorId: 'maposia',
           width: metrics.width,
           height: metrics.height,
           fontFamily,
@@ -559,6 +562,7 @@ export const convertToExcalidrawElements = (
       }
       case "image": {
         excalidrawElement = newImageElement({
+          authorId: 'maposia',
           width: element?.width || DEFAULT_DIMENSION,
           height: element?.height || DEFAULT_DIMENSION,
           ...element,
@@ -568,6 +572,7 @@ export const convertToExcalidrawElements = (
       }
       case "frame": {
         excalidrawElement = newFrameElement({
+          authorId: 'maposia',
           x: 0,
           y: 0,
           ...element,
@@ -576,6 +581,7 @@ export const convertToExcalidrawElements = (
       }
       case "magicframe": {
         excalidrawElement = newMagicFrameElement({
+          authorId: 'maposia',
           x: 0,
           y: 0,
           ...element,

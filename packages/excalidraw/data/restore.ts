@@ -126,6 +126,7 @@ const restoreElementWithProperties = <
     version: element.version || 1,
     versionNonce: element.versionNonce ?? 0,
     isDeleted: element.isDeleted ?? false,
+    authorId: element.authorId,
     id: element.id || randomId(),
     fillStyle: element.fillStyle || DEFAULT_ELEMENT_PROPS.fillStyle,
     strokeWidth: element.strokeWidth || DEFAULT_ELEMENT_PROPS.strokeWidth,

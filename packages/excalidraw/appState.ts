@@ -126,6 +126,7 @@ const APP_STATE_STORAGE_CONF = (<
   T extends Record<keyof AppState, Values>,
 >(config: { [K in keyof T]: K extends keyof AppState ? T[K] : never }) =>
   config)({
+  // authorId: {browser: false, export: false, server: false},
   showWelcomeScreen: { browser: false, export: false, server: false },
   theme: { browser: true, export: false, server: false },
   collaborators: { browser: false, export: false, server: false },
@@ -176,7 +177,7 @@ const APP_STATE_STORAGE_CONF = (<
   lastPointerDownWith: { browser: true, export: false, server: false },
   multiElement: { browser: false, export: false, server: false },
   name: { browser: true, export: false, server: false },
-  offsetLeft: { browser: false, export: false, server: false },
+offsetLeft: { browser: false, export: false, server: false },
   offsetTop: { browser: false, export: false, server: false },
   contextMenu: { browser: false, export: false, server: false },
   openMenu: { browser: true, export: false, server: false },

@@ -196,6 +196,7 @@ const chartXLabels = (
   return (
     spreadsheet.labels?.map((label, index) => {
       return newTextElement({
+        authorId: 'maposia',
         groupIds: [groupId],
         backgroundColor,
         ...commonProps,
@@ -220,6 +221,7 @@ const chartYLabels = (
   backgroundColor: string,
 ): ChartElements => {
   const minYLabel = newTextElement({
+    authorId: 'maposia',
     groupIds: [groupId],
     backgroundColor,
     ...commonProps,
@@ -230,6 +232,7 @@ const chartYLabels = (
   });
 
   const maxYLabel = newTextElement({
+    authorId: 'maposia',
     groupIds: [groupId],
     backgroundColor,
     ...commonProps,
@@ -251,6 +254,7 @@ const chartLines = (
 ): ChartElements => {
   const { chartWidth, chartHeight } = getChartDimensions(spreadsheet);
   const xLine = newLinearElement({
+    authorId: 'maposia',
     backgroundColor,
     groupIds: [groupId],
     ...commonProps,
@@ -267,6 +271,7 @@ const chartLines = (
   });
 
   const yLine = newLinearElement({
+    authorId: 'maposia',
     backgroundColor,
     groupIds: [groupId],
     ...commonProps,
@@ -283,6 +288,7 @@ const chartLines = (
   });
 
   const maxLine = newLinearElement({
+    authorId: 'maposia',
     backgroundColor,
     groupIds: [groupId],
     ...commonProps,
@@ -316,6 +322,7 @@ const chartBaseElements = (
 
   const title = spreadsheet.title
     ? newTextElement({
+        authorId: 'maposia',
         backgroundColor,
         groupIds: [groupId],
         ...commonProps,
@@ -329,6 +336,7 @@ const chartBaseElements = (
 
   const debugRect = debug
     ? newElement({
+        authorId: 'maposia',
         backgroundColor,
         groupIds: [groupId],
         ...commonProps,
@@ -364,6 +372,7 @@ const chartTypeBar = (
   const bars = spreadsheet.values.map((value, index) => {
     const barHeight = (value / max) * BAR_HEIGHT;
     return newElement({
+      authorId: 'maposia',
       backgroundColor,
       groupIds: [groupId],
       ...commonProps,
@@ -412,6 +421,7 @@ const chartTypeLine = (
   const minY = Math.min(...points.map((element) => element[1]));
 
   const line = newLinearElement({
+    authorId: 'maposia',
     backgroundColor,
     groupIds: [groupId],
     ...commonProps,
@@ -430,6 +440,7 @@ const chartTypeLine = (
     const cx = index * (BAR_WIDTH + BAR_GAP) + BAR_GAP / 2;
     const cy = -(value / max) * BAR_HEIGHT + BAR_GAP / 2;
     return newElement({
+      authorId: 'maposia',
       backgroundColor,
       groupIds: [groupId],
       ...commonProps,
@@ -447,6 +458,7 @@ const chartTypeLine = (
     const cx = index * (BAR_WIDTH + BAR_GAP) + BAR_GAP / 2;
     const cy = (value / max) * BAR_HEIGHT + BAR_GAP / 2 + BAR_GAP;
     return newLinearElement({
+      authorId: 'maposia',
       backgroundColor,
       groupIds: [groupId],
       ...commonProps,

@@ -35,6 +35,7 @@ const ExcalidrawBase = (props: ExcalidrawProps) => {
     libraryReturnUrl,
     theme,
     name,
+    authorId,
     renderCustomStats,
     onPaste,
     detectScroll = true,
@@ -114,6 +115,7 @@ const ExcalidrawBase = (props: ExcalidrawProps) => {
           libraryReturnUrl={libraryReturnUrl}
           theme={theme}
           name={name}
+          authorId={authorId}
           renderCustomStats={renderCustomStats}
           UIOptions={UIOptions}
           onPaste={onPaste}
