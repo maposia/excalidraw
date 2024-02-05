@@ -207,43 +207,43 @@ const ImageExportModal = ({
             }}
           />
         </ExportSetting>
-        {supportsContextFilters && (
-          <ExportSetting
-            label={t("imageExportDialog.label.darkMode")}
-            name="exportDarkModeSwitch"
-          >
-            <Switch
-              name="exportDarkModeSwitch"
-              checked={exportDarkMode}
-              onChange={(checked) => {
-                setExportDarkMode(checked);
-                actionManager.executeAction(
-                  actionExportWithDarkMode,
-                  "ui",
-                  checked,
-                );
-              }}
-            />
-          </ExportSetting>
-        )}
-        <ExportSetting
-          label={t("imageExportDialog.label.embedScene")}
-          tooltip={t("imageExportDialog.tooltip.embedScene")}
-          name="exportEmbedSwitch"
-        >
-          <Switch
-            name="exportEmbedSwitch"
-            checked={embedScene}
-            onChange={(checked) => {
-              setEmbedScene(checked);
-              actionManager.executeAction(
-                actionChangeExportEmbedScene,
-                "ui",
-                checked,
-              );
-            }}
-          />
-        </ExportSetting>
+        {/*{supportsContextFilters && (*/}
+        {/*  <ExportSetting*/}
+        {/*    label={t("imageExportDialog.label.darkMode")}*/}
+        {/*    name="exportDarkModeSwitch"*/}
+        {/*  >*/}
+        {/*    <Switch*/}
+        {/*      name="exportDarkModeSwitch"*/}
+        {/*      checked={exportDarkMode}*/}
+        {/*      onChange={(checked) => {*/}
+        {/*        setExportDarkMode(checked);*/}
+        {/*        actionManager.executeAction(*/}
+        {/*          actionExportWithDarkMode,*/}
+        {/*          "ui",*/}
+        {/*          checked,*/}
+        {/*        );*/}
+        {/*      }}*/}
+        {/*    />*/}
+        {/*  </ExportSetting>*/}
+        {/*)}*/}
+        {/*<ExportSetting*/}
+        {/*  label={t("imageExportDialog.label.embedScene")}*/}
+        {/*  tooltip={t("imageExportDialog.tooltip.embedScene")}*/}
+        {/*  name="exportEmbedSwitch"*/}
+        {/*>*/}
+        {/*  <Switch*/}
+        {/*    name="exportEmbedSwitch"*/}
+        {/*    checked={embedScene}*/}
+        {/*    onChange={(checked) => {*/}
+        {/*      setEmbedScene(checked);*/}
+        {/*      actionManager.executeAction(*/}
+        {/*        actionChangeExportEmbedScene,*/}
+        {/*        "ui",*/}
+        {/*        checked,*/}
+        {/*      );*/}
+        {/*    }}*/}
+        {/*  />*/}
+        {/*</ExportSetting>*/}
         <ExportSetting
           label={t("imageExportDialog.label.scale")}
           name="exportScale"
@@ -287,20 +287,20 @@ const ImageExportModal = ({
           >
             {t("imageExportDialog.button.exportToSvg")}
           </FilledButton>
-          {(probablySupportsClipboardBlob || isFirefox) && (
-            <FilledButton
-              className="ImageExportModal__settings__buttons__button"
-              label={t("imageExportDialog.title.copyPngToClipboard")}
-              onClick={() =>
-                onExportImage(EXPORT_IMAGE_TYPES.clipboard, exportedElements, {
-                  exportingFrame,
-                })
-              }
-              startIcon={copyIcon}
-            >
-              {t("imageExportDialog.button.copyPngToClipboard")}
-            </FilledButton>
-          )}
+          {/*{(probablySupportsClipboardBlob || isFirefox) && (*/}
+          {/*  <FilledButton*/}
+          {/*    className="ImageExportModal__settings__buttons__button"*/}
+          {/*    label={t("imageExportDialog.title.copyPngToClipboard")}*/}
+          {/*    onClick={() =>*/}
+          {/*      onExportImage(EXPORT_IMAGE_TYPES.clipboard, exportedElements, {*/}
+          {/*        exportingFrame,*/}
+          {/*      })*/}
+          {/*    }*/}
+          {/*    startIcon={copyIcon}*/}
+          {/*  >*/}
+          {/*    {t("imageExportDialog.button.copyPngToClipboard")}*/}
+          {/*  </FilledButton>*/}
+          {/*)}*/}
         </div>
       </div>
     </div>
