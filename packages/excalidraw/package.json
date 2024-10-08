@@ -64,7 +64,7 @@
     "@radix-ui/react-tabs": "1.0.2",
     "@tldraw/vec": "1.7.1",
     "browser-fs-access": "0.29.1",
-    "canvas-roundrect-polyfill": "0.0.1",
+    "@maposia/canvas-roundrect-polyfill": "0.0.1",
     "clsx": "1.1.1",
     "cross-env": "7.0.3",
     "image-blob-reduce": "3.0.1",

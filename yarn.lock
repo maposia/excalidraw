@@ -2649,6 +2649,11 @@
     "@jridgewell/resolve-uri" "3.1.0"
     "@jridgewell/sourcemap-codec" "1.4.14"
 
+"@maposia/canvas-roundrect-polyfill@0.0.1":
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/@maposia/canvas-roundrect-polyfill/-/canvas-roundrect-polyfill-0.0.1.tgz#ff1780bd39e356135386e48b143ca3a8b7a77984"
+  integrity sha512-z+lh5Xq1ACN9mBx9QGcKCOFrIRurVmVFjRFyoCTX2SQtnQRuCFtPY1FCJxtHXJLI2jVNFrhFJQsXNKlBYkW89w==
+
 "@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1":
   version "5.1.1-v1"
   resolved "https://registry.yarnpkg.com/@nicolo-ribaudo/eslint-scope-5-internals/-/eslint-scope-5-internals-5.1.1-v1.tgz#dbf733a965ca47b1973177dc0bb6c889edcfb129"
@@ -4706,11 +4711,6 @@ caniuse-lite@^1.0.30001449:
   version "1.0.30001478"
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001478.tgz#0ef8a1cf8b16be47a0f9fc4ecfc952232724b32a"
   integrity sha512-gMhDyXGItTHipJj2ApIvR+iVB5hd0KP3svMWWXDvZOmjzJJassGLMfxRkQCSYgGd2gtdL/ReeiyvMSFD1Ss6Mw==
-
-canvas-roundrect-polyfill@0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/canvas-roundrect-polyfill/-/canvas-roundrect-polyfill-0.0.1.tgz#70bf107ebe2037f26d839d7f809a26f4a95f5696"
-  integrity sha512-yWq+R3U3jE+coOeEb3a3GgE2j/0MMiDKM/QpLb6h9ihf5fGY9UXtvK9o4vNqjWXoZz7/3EaSVU3IX53TvFFUOw==
 
 chai@4.3.6:
   version "4.3.6"

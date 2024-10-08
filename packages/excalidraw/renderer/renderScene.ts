@@ -82,7 +82,7 @@ import {
   getTargetFrame,
   isElementInFrame,
 } from "../frame";
-import "canvas-roundrect-polyfill";
+import "@maposia/canvas-roundrect-polyfill";
 
 export const DEFAULT_SPACING = 2;
 
