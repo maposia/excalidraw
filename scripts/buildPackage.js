@@ -73,7 +73,6 @@ const createESMBrowserBuild = async () => {
     minify: true,
     chunkNames: "excalidraw-assets/[name]-[hash]",
     define: {
-      "import.meta.env": JSON.stringify({ PROD: true }),
     },
   });
 };

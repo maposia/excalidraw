@@ -157,17 +157,17 @@ export const MobileMenu = ({
     <>
       {renderSidebars()}
       {!appState.viewModeEnabled && renderToolbar()}
-      {!appState.openMenu && appState.showStats && (
-        <Stats
-          appState={appState}
-          setAppState={setAppState}
-          elements={elements}
-          onClose={() => {
-            actionManager.executeAction(actionToggleStats);
-          }}
-          renderCustomStats={renderCustomStats}
-        />
-      )}
+      {/*{!appState.openMenu && appState.showStats && (*/}
+      {/*  <Stats*/}
+      {/*    appState={appState}*/}
+      {/*    setAppState={setAppState}*/}
+      {/*    elements={elements}*/}
+      {/*    onClose={() => {*/}
+      {/*      actionManager.executeAction(actionToggleStats);*/}
+      {/*    }}*/}
+      {/*    renderCustomStats={renderCustomStats}*/}
+      {/*  />*/}
+      {/*)}*/}
       <div
         className="App-bottom-bar"
         style={{

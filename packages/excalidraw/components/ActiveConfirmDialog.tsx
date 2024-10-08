@@ -7,31 +7,29 @@ import ConfirmDialog from "./ConfirmDialog";
 
 export const activeConfirmDialogAtom = atom<"clearCanvas" | null>(null);
 
-export const ActiveConfirmDialog = () => {
-  const [activeConfirmDialog, setActiveConfirmDialog] = useAtom(
-    activeConfirmDialogAtom,
-    jotaiScope,
-  );
-  const actionManager = useExcalidrawActionManager();
+export const ActiveConfirmDialog = ({setOpenConfirmDialog, actionManager}) => {
+  // const [activeConfirmDialog, setActiveConfirmDialog] = useAtom(
+  //   activeConfirmDialogAtom,
+  //   jotaiScope,
+  // );
+  // const actionManager = useExcalidrawActionManager();
 
-  if (!activeConfirmDialog) {
-    return null;
-  }
+  // if (!activeConfirmDialog) {
+  //   return null;
+  // }
 
-  if (activeConfirmDialog === "clearCanvas") {
+  // if (activeConfirmDialog === "clearCanvas") {
     return (
       <ConfirmDialog
         onConfirm={() => {
           actionManager.executeAction(actionClearCanvas);
-          setActiveConfirmDialog(null);
+            setOpenConfirmDialog(false);
         }}
-        onCancel={() => setActiveConfirmDialog(null)}
+        onCancel={() => setOpenConfirmDialog(false)}
         title={t("clearCanvasDialog.title")}
       >
         <p className="clear-canvas__content"> {t("alerts.clearReset")}</p>
       </ConfirmDialog>
     );
-  }
 
-  return null;
 };

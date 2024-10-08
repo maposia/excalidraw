@@ -20,7 +20,8 @@ export const actionSelectAll = register({
         (element) =>
           !element.isDeleted &&
           !(isTextElement(element) && element.containerId) &&
-          !element.locked,
+          !element.locked &&
+            (app.props.isAdmin || !app.props.canOnlyEditOwnElement || element.authorId === app.props.authorId),
       ),
     ).reduce((map: Record<ExcalidrawElement["id"], true>, element) => {
       map[element.id] = true;

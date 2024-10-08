@@ -10,14 +10,16 @@ import { useDevice } from "../App";
 import { useTunnels } from "../../context/tunnels";
 import { Section } from "../Section";
 import Stack from "../Stack";
-import { UIAppState } from "../../types";
+import {AppClassProperties, UIAppState} from "../../types";
 
 const Footer = ({
+  app,
   appState,
   actionManager,
   showExitZenModeBtn,
   renderWelcomeScreen,
 }: {
+  app: AppClassProperties;
   appState: UIAppState;
   actionManager: ActionManager;
   showExitZenModeBtn: boolean;
@@ -47,15 +49,15 @@ const Footer = ({
               zoom={appState.zoom}
             />
 
-            {!appState.viewModeEnabled && (
-              <UndoRedoActions
-                renderAction={actionManager.renderAction}
-                className={clsx("zen-mode-transition", {
-                  "layer-ui__wrapper__footer-left--transition-bottom":
-                    appState.zenModeEnabled,
-                })}
-              />
-            )}
+            {/*{!appState.viewModeEnabled && (*/}
+            {/*  <UndoRedoActions*/}
+            {/*    renderAction={actionManager.renderAction}*/}
+            {/*    className={clsx("zen-mode-transition", {*/}
+            {/*      "layer-ui__wrapper__footer-left--transition-bottom":*/}
+            {/*        appState.zenModeEnabled,*/}
+            {/*    })}*/}
+            {/*  />*/}
+            {/*)}*/}
             {showFinalize && (
               <FinalizeAction
                 renderAction={actionManager.renderAction}
@@ -81,10 +83,12 @@ const Footer = ({
           {/*/>*/}
         </div>
       </div>
-      <ExitZenModeAction
-        actionManager={actionManager}
-        showExitZenModeBtn={showExitZenModeBtn}
+      {app.props.isAdmin && (
+          <ExitZenModeAction
+          actionManager={actionManager}
+          showExitZenModeBtn={showExitZenModeBtn}
       />
+      )}
     </footer>
   );
 };

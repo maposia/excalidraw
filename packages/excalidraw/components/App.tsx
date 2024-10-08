@@ -621,6 +621,7 @@ class App extends React.Component<AppProps, AppState> {
       theme = defaultAppState.theme,
       name = defaultAppState.name,
     } = props;
+
     this.state = {
       ...defaultAppState,
       theme,
@@ -2521,24 +2522,24 @@ class App extends React.Component<AppProps, AppState> {
         this.fonts.onFontsLoaded(loadedFontFaces);
       }),
       // Safari-only desktop pinch zoom
-      addEventListener(
-        document,
-        EVENT.GESTURE_START,
-        this.onGestureStart as any,
-        false,
-      ),
-      addEventListener(
-        document,
-        EVENT.GESTURE_CHANGE,
-        this.onGestureChange as any,
-        false,
-      ),
-      addEventListener(
-        document,
-        EVENT.GESTURE_END,
-        this.onGestureEnd as any,
-        false,
-      ),
+      // addEventListener(
+      //     document,
+      //   EVENT.GESTURE_START,
+      //   this.onGestureStart as any,
+      //   false,
+      // ),
+      // addEventListener(
+      //     document,
+      //   EVENT.GESTURE_CHANGE,
+      //   this.onGestureChange as any,
+      //   false,
+      // ),
+      // addEventListener(
+      //     document,
+      //   EVENT.GESTURE_END,
+      //   this.onGestureEnd as any,
+      //   false,
+      // ),
       addEventListener(window, EVENT.FOCUS, () => {
         this.maybeCleanupAfterMissingPointerUp(null);
       }),
@@ -3706,6 +3707,7 @@ class App extends React.Component<AppProps, AppState> {
       ) {
         event = new Proxy(event, {
           get(ev: any, prop) {
+            // @ts-ignore
             const value = ev[prop];
             if (typeof value === "function") {
               // fix for Proxies hijacking `this`
@@ -4348,9 +4350,12 @@ class App extends React.Component<AppProps, AppState> {
     y: number,
     includeBoundTextElement: boolean = false,
     includeLockedElements: boolean = false,
+    canOnlyEditOwnElement: boolean | undefined = this.props.canOnlyEditOwnElement,
+    isAdmin: boolean | undefined = this.props.isAdmin,
+    authorId: string | null | undefined = this.props.authorId
   ): NonDeleted<ExcalidrawElement>[] {
     const elements =
-      includeBoundTextElement && includeLockedElements
+      (includeBoundTextElement && includeLockedElements)
         ? this.scene.getNonDeletedElements()
         : this.scene
             .getNonDeletedElements()
@@ -4358,7 +4363,8 @@ class App extends React.Component<AppProps, AppState> {
               (element) =>
                 (includeLockedElements || !element.locked) &&
                 (includeBoundTextElement ||
-                  !(isTextElement(element) && element.containerId)),
+                  !(isTextElement(element) && element.containerId))  &&
+                  (isAdmin || !canOnlyEditOwnElement || element.authorId === authorId),
             );
 
     return getElementsAtPosition(elements, (element) =>
@@ -4754,7 +4760,6 @@ class App extends React.Component<AppProps, AppState> {
         y: event.clientY,
       });
     }
-
     const initialScale = gesture.initialScale;
     if (
       gesture.pointers.size === 2 &&
@@ -4827,7 +4832,6 @@ class App extends React.Component<AppProps, AppState> {
 
     const scenePointer = viewportCoordsToSceneCoords(event, this.state);
     const { x: scenePointerX, y: scenePointerY } = scenePointer;
-
     if (
       !this.state.draggingElement &&
       isActiveToolNonLinearSnappable(this.state.activeTool.type)
@@ -5155,7 +5159,8 @@ class App extends React.Component<AppProps, AppState> {
 
     const processElements = (elements: ExcalidrawElement[]) => {
       for (const element of elements) {
-        if (element.locked) {
+        const isAuthor = element.authorId === this.props.authorId
+        if ( element.locked || (!this.props.isAdmin && this.props.canOnlyEditOwnElement && !isAuthor)) {
           // блокировка стирания элемента
           return;
         }
@@ -5611,10 +5616,10 @@ class App extends React.Component<AppProps, AppState> {
         opacity: this.state.currentItemOpacity,
       });
       this.scene.addNewElement(sticker)
-      console.log(sticker)
+
       this.startTextEditing({
-        sceneX: sceneX + 100,
-        sceneY: sceneY + 100,
+        sceneX: sceneX + 70,
+        sceneY: sceneY + 70,
         insertAtParentCenter: true,
         container:  sticker as ExcalidrawRectangleElement,
       });
@@ -6107,7 +6112,6 @@ class App extends React.Component<AppProps, AppState> {
             pointerDownState.origin.x,
             pointerDownState.origin.y,
           );
-
         if (pointerDownState.hit.element) {
           // Early return if pointer is hitting link icon
           const hitLinkElement = this.getElementLinkAtPosition(
@@ -6128,7 +6132,6 @@ class App extends React.Component<AppProps, AppState> {
           pointerDownState.origin.x,
           pointerDownState.origin.y,
         );
-
         const hitElement = pointerDownState.hit.element;
         const someHitElementIsSelected =
           pointerDownState.hit.allHitElements.some((element) =>
@@ -6139,9 +6142,9 @@ class App extends React.Component<AppProps, AppState> {
           !event.shiftKey &&
           !pointerDownState.hit.hasHitCommonBoundingBoxOfSelectedElements
         ) {
+
           this.clearSelection(hitElement);
         }
-
         if (this.state.editingLinearElement) {
           this.setState({
             selectedElementIds: makeNextSelectedElementIds(
@@ -6911,7 +6914,6 @@ class App extends React.Component<AppProps, AppState> {
       if (!(target instanceof HTMLElement)) {
         return;
       }
-
       if (this.handlePointerMoveOverScrollbars(event, pointerDownState)) {
         return;
       }
@@ -7074,6 +7076,8 @@ class App extends React.Component<AppProps, AppState> {
         if (selectedElements.every((element) => element.locked)) {
           return;
         }
+
+
 
         const selectedElementsHasAFrame = selectedElements.find((e) =>
           isFrameLikeElement(e),
@@ -7351,6 +7355,10 @@ class App extends React.Component<AppProps, AppState> {
           const elementsWithinSelection = getElementsWithinSelection(
             elements,
             draggingElement,
+            true,
+            this.props.canOnlyEditOwnElement,
+            this.props.isAdmin,
+            this.props.authorId
           );
 
           this.setState((prevState) => {
@@ -8315,9 +8323,13 @@ class App extends React.Component<AppProps, AppState> {
       // optimization so that we don't unnecessarily resize the original
       // full-size file for cursor preview
       // (it's much faster to convert the resized dataURL to File)
-      const resizedFile = dataURL && dataURLToFile(dataURL);
 
-      this.setImagePreviewCursor(resizedFile || imageFile);
+      if (dataURL?.startsWith("http")) {
+        this.setImagePreviewCursor(imageFile);
+      } else {
+        const resizedFile = dataURL && dataURLToFile(dataURL);
+        this.setImagePreviewCursor(resizedFile || imageFile);
+      }
     }
 
     const dataURL =
@@ -9229,7 +9241,7 @@ class App extends React.Component<AppProps, AppState> {
           actionToggleGridMode,
           actionToggleZenMode,
           actionToggleViewMode,
-          actionToggleStats,
+          // actionToggleStats,
         ];
       }
 
@@ -9336,6 +9348,7 @@ class App extends React.Component<AppProps, AppState> {
         if (absDelta > MAX_STEP) {
           delta = MAX_STEP * sign;
         }
+
 
         let newZoom = this.state.zoom.value - delta / 100;
         // increase zoom steps the more zoomed-in we are (applies to >100% only)

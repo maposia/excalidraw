@@ -692,6 +692,7 @@ const ExcalidrawWrapper = () => {
     >
       <Excalidraw
         excalidrawAPI={excalidrawRefCallback}
+        canOnlyEditOwnElement={true}
         onChange={onChange}
         initialData={initialStatePromiseRef.current.promise}
         isCollaborating={isCollaborating}
@@ -733,7 +734,8 @@ const ExcalidrawWrapper = () => {
         onLibraryChange={onLibraryChange}
         autoFocus={true}
         theme={theme}
-        authorId="maposia"
+        isAdmin={true}
+        authorId="mapos1a"
         renderTopRightUI={(isMobile) => {
           if (isMobile || !collabAPI || isCollabDisabled) {
             return null;

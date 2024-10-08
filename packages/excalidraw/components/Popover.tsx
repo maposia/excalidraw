@@ -41,7 +41,7 @@ export const Popover = ({
     // like color picker listening to keydown events on containers nested
     // in the popover.
     if (!container.contains(document.activeElement)) {
-      container.focus();
+      // container.focus();
     }
 
     const handleKeyDown = (event: KeyboardEvent) => {

@@ -169,7 +169,10 @@ export type NonDeleted<TElement extends ExcalidrawElement> = TElement & {
   isDeleted: boolean;
 };
 
+
 export type NonDeletedExcalidrawElement = NonDeleted<ExcalidrawElement>;
+
+
 
 export type ExcalidrawTextElement = _ExcalidrawElementBase &
   Readonly<{

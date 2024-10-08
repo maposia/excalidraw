@@ -108,7 +108,7 @@ export const SaveAsImage = () => {
       icon={ExportImageIcon}
       data-testid="image-export-button"
       onSelect={() => setAppState({ openDialog: { name: "imageExport" } })}
-      shortcut={getShortcutFromShortcutName("imageExport")}
+      // shortcut={getShortcutFromShortcutName("imageExport")}
       aria-label={t("buttons.exportImage")}
     >
       {t("buttons.exportImage")}
@@ -136,23 +136,23 @@ export const Help = () => {
 };
 Help.displayName = "Help";
 
-export const ClearCanvas = () => {
+export const ClearCanvas = ({setOpenConfirmDialog}) => {
   const { t } = useI18n();
 
-  const setActiveConfirmDialog = useSetAtom(
-    activeConfirmDialogAtom,
-    jotaiScope,
-  );
-  const actionManager = useExcalidrawActionManager();
+  // const setActiveConfirmDialog = useSetAtom(
+  //   activeConfirmDialogAtom,
+  //   jotaiScope,
+  // );
+  // const actionManager = useExcalidrawActionManager();
 
-  if (!actionManager.isActionEnabled(actionClearCanvas)) {
-    return null;
-  }
+  // if (!actionManager.isActionEnabled(actionClearCanvas)) {
+  //   return null;
+  // }
 
   return (
     <DropdownMenuItem
       icon={TrashIcon}
-      onSelect={() => setActiveConfirmDialog("clearCanvas")}
+      onSelect={() => setOpenConfirmDialog(true)}
       data-testid="clear-canvas-button"
       aria-label={t("buttons.clearReset")}
     >

@@ -22,6 +22,7 @@ polyfill();
 
 const ExcalidrawBase = (props: ExcalidrawProps) => {
   const {
+    canOnlyEditOwnElement,
     isAdmin,
     onChange,
     initialData,
@@ -81,23 +82,23 @@ const ExcalidrawBase = (props: ExcalidrawProps) => {
     UIOptions.canvasActions.toggleTheme = true;
   }
 
-  useEffect(() => {
-    // Block pinch-zooming on iOS outside of the content area
-    const handleTouchMove = (event: TouchEvent) => {
-      // @ts-ignore
-      if (typeof event.scale === "number" && event.scale !== 1) {
-        event.preventDefault();
-      }
-    };
-
-    document.addEventListener("touchmove", handleTouchMove, {
-      passive: false,
-    });
-
-    return () => {
-      document.removeEventListener("touchmove", handleTouchMove);
-    };
-  }, []);
+  // useEffect(() => {
+  //   // Block pinch-zooming on iOS outside of the content area
+  //   const handleTouchMove = (event: TouchEvent) => {
+  //     // @ts-ignore
+  //     if (typeof event.scale === "number" && event.scale !== 1) {
+  //       event.preventDefault();
+  //     }
+  //   };
+  //
+  //   document.addEventListener("touchmove", handleTouchMove, {
+  //     passive: false,
+  //   });
+  //
+  //   return () => {
+  //     document.removeEventListener("touchmove", handleTouchMove);
+  //   };
+  // }, []);
 
   return (
     <Provider unstable_createStore={() => jotaiStore} scope={jotaiScope}>
@@ -117,6 +118,7 @@ const ExcalidrawBase = (props: ExcalidrawProps) => {
           theme={theme}
           name={name}
           isAdmin={isAdmin}
+          canOnlyEditOwnElement={canOnlyEditOwnElement}
           authorId={authorId}
           renderCustomStats={renderCustomStats}
           UIOptions={UIOptions}

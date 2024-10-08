@@ -279,24 +279,24 @@ export const ShapesSwitcher = ({
           />
         );
       })}
-      <div className="App-toolbar__divider" />
+      {/*<div className="App-toolbar__divider" />*/}
 
       <DropdownMenu open={isExtraToolsMenuOpen}>
-        <DropdownMenu.Trigger
-          className={clsx("App-toolbar__extra-tools-trigger", {
-            "App-toolbar__extra-tools-trigger--selected":
-              frameToolSelected ||
-              embeddableToolSelected ||
-              // in collab we're already highlighting the laser button
-              // outside toolbar, so let's not highlight extra-tools button
-              // on top of it
-              (laserToolSelected && !app.props.isCollaborating),
-          })}
-          onToggle={() => setIsExtraToolsMenuOpen(!isExtraToolsMenuOpen)}
-          title={t("toolBar.extraTools")}
-        >
-          {extraToolsIcon}
-        </DropdownMenu.Trigger>
+        {/*<DropdownMenu.Trigger*/}
+        {/*  className={clsx("App-toolbar__extra-tools-trigger", {*/}
+        {/*    "App-toolbar__extra-tools-trigger--selected":*/}
+        {/*      frameToolSelected ||*/}
+        {/*      embeddableToolSelected ||*/}
+        {/*      // in collab we're already highlighting the laser button*/}
+        {/*      // outside toolbar, so let's not highlight extra-tools button*/}
+        {/*      // on top of it*/}
+        {/*      (laserToolSelected && !app.props.isCollaborating),*/}
+        {/*  })}*/}
+        {/*  onToggle={() => setIsExtraToolsMenuOpen(!isExtraToolsMenuOpen)}*/}
+        {/*  title={t("toolBar.extraTools")}*/}
+        {/*>*/}
+        {/*  {extraToolsIcon}*/}
+        {/*</DropdownMenu.Trigger>*/}
         <DropdownMenu.Content
           onClickOutside={() => setIsExtraToolsMenuOpen(false)}
           onSelect={() => setIsExtraToolsMenuOpen(false)}

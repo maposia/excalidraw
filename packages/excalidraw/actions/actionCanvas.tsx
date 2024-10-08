@@ -66,7 +66,7 @@ export const actionClearCanvas = register({
       !appState.viewModeEnabled
     );
   },
-  perform: (elements, appState, _, app) => {
+  perform: (elements, appState, _ , app) => {
     app.imageCache.clear();
     return {
       elements: elements.map((element) =>

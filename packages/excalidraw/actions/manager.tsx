@@ -68,6 +68,7 @@ export class ActionManager {
     this.app = app;
   }
 
+
   registerAction(action: Action) {
     this.actions[action.name] = action;
   }

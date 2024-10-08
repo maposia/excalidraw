@@ -56,8 +56,8 @@ export const ContextMenu = React.memo(
         top={top}
         left={left}
         fitInViewport={true}
-        offsetLeft={appState.offsetLeft}
-        offsetTop={appState.offsetTop}
+        offsetLeft={0}
+        offsetTop={0}
         viewportWidth={appState.width}
         viewportHeight={appState.height}
       >

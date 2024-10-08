@@ -5,7 +5,7 @@ import "./ConfirmDialog.scss";
 import DialogActionButton from "./DialogActionButton";
 import { useSetAtom } from "jotai";
 import { isLibraryMenuOpenAtom } from "./LibraryMenu";
-import { useExcalidrawContainer, useExcalidrawSetAppState } from "./App";
+import {useAppProps, useExcalidrawContainer, useExcalidrawSetAppState} from "./App";
 import { jotaiScope } from "../jotai";
 
 interface Props extends Omit<DialogProps, "onCloseRequest"> {
@@ -27,6 +27,7 @@ const ConfirmDialog = (props: Props) => {
   const setAppState = useExcalidrawSetAppState();
   const setIsLibraryMenuOpen = useSetAtom(isLibraryMenuOpenAtom, jotaiScope);
   const { container } = useExcalidrawContainer();
+  const appState = useAppProps()
 
   return (
     <Dialog
@@ -36,27 +37,28 @@ const ConfirmDialog = (props: Props) => {
       className={`confirm-dialog ${className}`}
     >
       {children}
-      <div className="confirm-dialog-buttons">
-        <DialogActionButton
-          label={cancelText}
-          onClick={() => {
-            setAppState({ openMenu: null });
-            setIsLibraryMenuOpen(false);
-            onCancel();
-            container?.focus();
-          }}
-        />
-        <DialogActionButton
-          label={confirmText}
-          onClick={() => {
-            setAppState({ openMenu: null });
-            setIsLibraryMenuOpen(false);
-            onConfirm();
-            container?.focus();
-          }}
-          actionType="danger"
-        />
-      </div>
+        <div className="confirm-dialog-buttons">
+
+            <DialogActionButton
+                label={cancelText}
+                onClick={() => {
+                    setAppState({openMenu: null});
+                    setIsLibraryMenuOpen(false);
+                    onCancel();
+                    container?.focus();
+                }}
+            />
+            <DialogActionButton
+                label={confirmText}
+                onClick={() => {
+                    setAppState({openMenu: null});
+                    setIsLibraryMenuOpen(false);
+                    onConfirm();
+                    container?.focus();
+                }}
+                actionType="danger"
+            />
+        </div>
     </Dialog>
   );
 };

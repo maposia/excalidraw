@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React from "react";
+import React, {useState} from "react";
 import { ActionManager } from "../actions/manager";
 import {
   CLASSES,
@@ -92,7 +92,8 @@ interface LayerUIProps {
 
 const DefaultMainMenu: React.FC<{
   UIOptions: AppProps["UIOptions"];
-}> = ({ UIOptions }) => {
+  setOpenConfirmDialog: (open: boolean) => void;
+}> = ({ UIOptions, setOpenConfirmDialog }) => {
   return (
     <MainMenu __fallback>
       {/*<MainMenu.DefaultItems.LoadScene />*/}
@@ -104,7 +105,7 @@ const DefaultMainMenu: React.FC<{
         <MainMenu.DefaultItems.SaveAsImage />
       )}
       {/*<MainMenu.DefaultItems.Help />*/}
-      <MainMenu.DefaultItems.ClearCanvas />
+      <MainMenu.DefaultItems.ClearCanvas setOpenConfirmDialog={setOpenConfirmDialog}/>
       <MainMenu.Separator />
       {/*<MainMenu.Group title="Excalidraw links">*/}
       {/*  <MainMenu.DefaultItems.Socials />*/}
@@ -146,6 +147,7 @@ const LayerUI = ({
   app,
   isCollaborating,
 }: LayerUIProps) => {
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false)
   const device = useDevice();
   const tunnels = useInitializeTunnels();
 
@@ -376,7 +378,7 @@ const LayerUI = ({
       {/* render component fallbacks. Can be rendered anywhere as they'll be
           tunneled away. We only render tunneled components that actually
         have defaults when host do not render anything. */}
-      {app.props.isAdmin && <DefaultMainMenu UIOptions={UIOptions} />}
+      {app.props.isAdmin && <DefaultMainMenu UIOptions={UIOptions} setOpenConfirmDialog={setOpenConfirmDialog} />}
       {/*<DefaultSidebar.Trigger*/}
       {/*  __fallback*/}
       {/*  icon={LibraryIcon}*/}
@@ -451,7 +453,7 @@ const LayerUI = ({
           }}
         />
       )}
-      <ActiveConfirmDialog />
+      {openConfirmDialog && <ActiveConfirmDialog setOpenConfirmDialog={setOpenConfirmDialog} actionManager={actionManager}/>}
       <tunnels.OverwriteConfirmDialogTunnel.Out />
       {renderImageExportDialog()}
       {renderJSONExportDialog()}
@@ -501,22 +503,23 @@ const LayerUI = ({
             {renderWelcomeScreen && <tunnels.WelcomeScreenCenterTunnel.Out />}
             {renderFixedSideContainer()}
             <Footer
+              app={app}
               appState={appState}
               actionManager={actionManager}
               showExitZenModeBtn={showExitZenModeBtn}
               renderWelcomeScreen={renderWelcomeScreen}
             />
-            {appState.showStats && (
-              <Stats
-                appState={appState}
-                setAppState={setAppState}
-                elements={elements}
-                onClose={() => {
-                  actionManager.executeAction(actionToggleStats);
-                }}
-                renderCustomStats={renderCustomStats}
-              />
-            )}
+            {/*{appState.showStats && (*/}
+            {/*  <Stats*/}
+            {/*    appState={appState}*/}
+            {/*    setAppState={setAppState}*/}
+            {/*    elements={elements}*/}
+            {/*    onClose={() => {*/}
+            {/*      actionManager.executeAction(actionToggleStats);*/}
+            {/*    }}*/}
+            {/*    renderCustomStats={renderCustomStats}*/}
+            {/*  />*/}
+            {/*)}*/}
             {appState.scrolledOutside && (
               <button
                 className="scroll-back-to-content"

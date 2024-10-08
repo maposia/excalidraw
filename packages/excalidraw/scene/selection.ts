@@ -45,6 +45,9 @@ export const getElementsWithinSelection = (
   elements: readonly NonDeletedExcalidrawElement[],
   selection: NonDeletedExcalidrawElement,
   excludeElementsInFrames: boolean = true,
+  canOnlyEditOwnElement: boolean | undefined = true,
+  isAdmin: boolean | undefined = false,
+  authorId: string | null | undefined = 'maposia',
 ) => {
   const [selectionX1, selectionY1, selectionX2, selectionY2] =
     getElementAbsoluteCoords(selection);
@@ -65,6 +68,7 @@ export const getElementsWithinSelection = (
 
     return (
       element.locked === false &&
+      (isAdmin || !canOnlyEditOwnElement || element.authorId === authorId) &&
       element.type !== "selection" &&
       !isBoundToContainer(element) &&
       selectionX1 <= elementX1 &&

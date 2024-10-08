@@ -26,9 +26,9 @@ const elements: ExcalidrawElementSkeleton[] = [
     type: "arrow",
     x: 100,
     y: 200,
-    label: { text: "HELLO WORLD!!" },
-    start: { type: "rectangle" },
-    end: { type: "ellipse" },
+    label: { text: "HELLO WORLD!!", authorId: "maposia"},
+    start: { type: "rectangle", authorId: "maposia"},
+    end: { type: "ellipse", authorId: "maposia"},
   },
   {
     type: "image",
