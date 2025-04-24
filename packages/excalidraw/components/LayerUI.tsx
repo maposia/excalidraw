@@ -128,6 +128,7 @@ const DefaultOverwriteConfirmDialog = () => {
 };
 
 const LayerUI = ({
+  // updateCoordinates,
   actionManager,
   appState,
   files,
@@ -555,8 +556,8 @@ const stripIrrelevantAppStateProps = (appState: AppState): UIAppState => {
     suggestedBindings,
     startBoundElement,
     cursorButton,
-    scrollX,
-    scrollY,
+    // scrollX,
+    // scrollY,
     ...ret
   } = appState;
   return ret;

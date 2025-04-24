@@ -91,6 +91,7 @@ export const SHAPES = [
     numericKey: null,
     fillable: false,
   },
+
 ] as const;
 
 export const findShapeByKey = (key: string) => {

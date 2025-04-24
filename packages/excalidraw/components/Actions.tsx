@@ -30,7 +30,7 @@ import {
 import "./Actions.scss";
 import DropdownMenu from "./dropdownMenu/DropdownMenu";
 import {
-  extraToolsIcon,
+  extraToolsIcon, FocusIcon,
   laserPointerToolIcon,
 } from "./icons";
 import { KEYS } from "../keys";
@@ -220,12 +220,12 @@ export const ShapesSwitcher = ({
   app: AppClassProperties;
   UIOptions: AppProps["UIOptions"];
 }) => {
-  const [isExtraToolsMenuOpen, setIsExtraToolsMenuOpen] = useState(false);
+  const [isExtraToolsMenuOpen, setIsExtraToolsMenuOpen] = useState(true);
+  const isAdmin = app.props.isAdmin
 
   const frameToolSelected = activeTool.type === "frame";
   const laserToolSelected = activeTool.type === "laser";
   const embeddableToolSelected = activeTool.type === "embeddable";
-
   // const { TTDDialogTriggerTunnel } = useTunnels();
 
   return (
@@ -279,44 +279,47 @@ export const ShapesSwitcher = ({
           />
         );
       })}
-      {/*<div className="App-toolbar__divider" />*/}
+      <div className="App-toolbar__divider" />
 
-      <DropdownMenu open={isExtraToolsMenuOpen}>
-        {/*<DropdownMenu.Trigger*/}
-        {/*  className={clsx("App-toolbar__extra-tools-trigger", {*/}
-        {/*    "App-toolbar__extra-tools-trigger--selected":*/}
-        {/*      frameToolSelected ||*/}
-        {/*      embeddableToolSelected ||*/}
-        {/*      // in collab we're already highlighting the laser button*/}
-        {/*      // outside toolbar, so let's not highlight extra-tools button*/}
-        {/*      // on top of it*/}
-        {/*      (laserToolSelected && !app.props.isCollaborating),*/}
-        {/*  })}*/}
-        {/*  onToggle={() => setIsExtraToolsMenuOpen(!isExtraToolsMenuOpen)}*/}
-        {/*  title={t("toolBar.extraTools")}*/}
-        {/*>*/}
-        {/*  {extraToolsIcon}*/}
-        {/*</DropdownMenu.Trigger>*/}
-        <DropdownMenu.Content
-          onClickOutside={() => setIsExtraToolsMenuOpen(false)}
-          onSelect={() => setIsExtraToolsMenuOpen(false)}
-          className="App-toolbar__extra-tools-dropdown"
-        >
-          <DropdownMenu.Item
-            onSelect={() => app.setActiveTool({ type: "laser" })}
-            icon={laserPointerToolIcon}
-            data-testid="toolbar-laser"
-            selected={laserToolSelected}
-            shortcut={KEYS.K.toLocaleUpperCase()}
-          >
-            {t("toolBar.laser")}
-          </DropdownMenu.Item>
-          {/*<div style={{ margin: "6px 0", fontSize: 14, fontWeight: 600 }}>*/}
-          {/*  Generate*/}
-          {/*</div>*/}
-          {/*{app.props.aiEnabled !== false && <TTDDialogTriggerTunnel.Out />}*/}
-        </DropdownMenu.Content>
-      </DropdownMenu>
+      {isAdmin && (
+          <DropdownMenu open={isExtraToolsMenuOpen}>
+            <DropdownMenu.Trigger
+                className={clsx("App-toolbar__extra-tools-trigger", {
+                  "App-toolbar__extra-tools-trigger--selected":
+                      frameToolSelected ||
+                      embeddableToolSelected ||
+                      // in collab we're already highlighting the laser button
+                      // outside toolbar, so let's not highlight extra-tools button
+                      // on top of it
+                      (laserToolSelected && !app.props.isCollaborating),
+                })}
+                onToggle={()=> app.props.onFocusMe()}
+                title={t("toolBar.followMe")}
+            >
+              {FocusIcon}
+            </DropdownMenu.Trigger>
+            {/*<DropdownMenu.Content*/}
+            {/*  onClickOutside={() => setIsExtraToolsMenuOpen(false)}*/}
+            {/*  onSelect={() => setIsExtraToolsMenuOpen(false)}*/}
+            {/*  className="App-toolbar__extra-tools-dropdown"*/}
+            {/*>*/}
+            {/*  <DropdownMenu.Item*/}
+            {/*    // onSelect={() => app.setActiveTool({ type: "laser" })}*/}
+            {/*    icon={laserPointerToolIcon}*/}
+            {/*    data-testid="toolbar-laser"*/}
+            {/*    selected={laserToolSelected}*/}
+            {/*    shortcut={KEYS.K.toLocaleUpperCase()}*/}
+            {/*  >*/}
+            {/*    {t("toolBar.laser")}*/}
+            {/*  </DropdownMenu.Item>*/}
+            {/*  /!*<div style={{ margin: "6px 0", fontSize: 14, fontWeight: 600 }}>*!/*/}
+            {/*  /!*  Generate*!/*/}
+            {/*  /!*</div>*!/*/}
+            {/*  /!*{app.props.aiEnabled !== false && <TTDDialogTriggerTunnel.Out />}*!/*/}
+            {/*</DropdownMenu.Content>*/}
+          </DropdownMenu>
+      )}
+
     </>
   );
 };

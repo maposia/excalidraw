@@ -243,6 +243,7 @@
     "line": "Линия",
     "freedraw": "Чертить",
     "sticker": "Стикер",
+    "follow": "Следовать за мной",
     "text": "Текст",
     "library": "Библиотека",
     "lock": "Сохранять выбранный инструмент активным после рисования",
@@ -255,6 +256,7 @@
     "laser": "Лазерная указка",
     "hand": "Рука (перемещение холста)",
     "extraTools": "",
+    "followMe": "FollowMe",
     "mermaidToExcalidraw": "Из Mermaid в Excalidraw",
     "magicSettings": "Параметры AI"
   },

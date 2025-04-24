@@ -26,6 +26,7 @@ const ExcalidrawBase = (props: ExcalidrawProps) => {
     isAdmin,
     onChange,
     initialData,
+    onFocusMe = () => {},
     excalidrawAPI,
     isCollaborating = false,
     onPointerUpdate,
@@ -130,6 +131,7 @@ const ExcalidrawBase = (props: ExcalidrawProps) => {
           generateIdForFile={generateIdForFile}
           onLinkOpen={onLinkOpen}
           onPointerDown={onPointerDown}
+          onFocusMe={onFocusMe}
           onScrollChange={onScrollChange}
           validateEmbeddable={validateEmbeddable}
           renderEmbeddable={renderEmbeddable}

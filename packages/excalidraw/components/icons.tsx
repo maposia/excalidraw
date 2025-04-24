@@ -386,6 +386,20 @@ export const StickerIcon = createIcon(
     tablerIconProps,
 );
 
+export const FocusIcon = createIcon(
+    <g strokeWidth="1.5">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+    <path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+    <path d="M12 3l0 4" />
+    <path d="M12 21l0 -3" />
+    <path d="M3 12l4 0" />
+   <path d="M21 12l-3 0" />
+<path d="M12 12l0 .01" />
+    </g>,
+
+    tablerIconProps,
+);
+
 export const ZoomInIcon = createIcon(
   <path strokeWidth="1.25" d="M10 4.167v11.666M4.167 10h11.666" />,
   modifiedTablerIconProps,

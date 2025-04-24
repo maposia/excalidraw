@@ -459,6 +459,7 @@ export interface ExcalidrawProps {
     activeTool: AppState["activeTool"],
     pointerDownState: PointerDownState,
   ) => void;
+  onFocusMe: () => void;
   onScrollChange?: (scrollX: number, scrollY: number, zoom: Zoom) => void;
   onUserFollow?: (payload: OnUserFollowedPayload) => void;
   children?: React.ReactNode;
@@ -693,6 +694,9 @@ export type ExcalidrawImperativeAPI = {
   ) => UnsubscribeCallback;
   onScrollChange: (
     callback: (scrollX: number, scrollY: number, zoom: Zoom) => void,
+  ) => UnsubscribeCallback;
+  onFocusMe: (
+      onFocusMe: () => void,
   ) => UnsubscribeCallback;
   onUserFollow: (
     callback: (payload: OnUserFollowedPayload) => void,

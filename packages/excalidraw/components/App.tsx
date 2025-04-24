@@ -604,6 +604,9 @@ class App extends React.Component<AppProps, AppState> {
     [scrollX: number, scrollY: number, zoom: AppState["zoom"]]
   >();
 
+  onFocusMeEmitter = new Emitter<[]
+  >();
+
   missingPointerEventCleanupEmitter = new Emitter<
     [event: PointerEvent | null]
   >();
@@ -676,6 +679,7 @@ class App extends React.Component<AppProps, AppState> {
         onChange: (cb) => this.onChangeEmitter.on(cb),
         onPointerDown: (cb) => this.onPointerDownEmitter.on(cb),
         onPointerUp: (cb) => this.onPointerUpEmitter.on(cb),
+        onFocusMe: (cb) => this.onFocusMeEmitter.on(cb),
         onScrollChange: (cb) => this.onScrollChangeEmitter.on(cb),
         onUserFollow: (cb) => this.onUserFollowEmitter.on(cb),
       } as const;
@@ -1429,6 +1433,8 @@ class App extends React.Component<AppProps, AppState> {
         editingElement: this.state.editingElement,
         pendingImageElementId: this.state.pendingImageElementId,
       });
+
+    // console.log(this.state.scrollX)
 
     const shouldBlockPointerEvents =
       !(
