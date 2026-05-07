@@ -753,10 +753,16 @@ export type CanvasActions = Partial<{
 export type UIOptions = Partial<{
   dockedSidebarBreakpoint: number;
   canvasActions: CanvasActions;
-  tools: {
+  tools: Partial<{
+    embeddable: boolean;
+    frame: boolean;
     image: boolean;
+    library: boolean;
+    magicframe: boolean;
+    mermaidToExcalidraw: boolean;
     sticker: boolean;
-  };
+    textToDiagram: boolean;
+  }>;
   /**
    * Optionally control the editor form factor and desktop UI mode from the host app.
    * If not provided, we will take care of it internally.

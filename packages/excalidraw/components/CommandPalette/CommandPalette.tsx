@@ -429,6 +429,7 @@ function CommandPaletteInner({
           category: DEFAULT_CATEGORIES.app,
           icon: LibraryIcon,
           viewMode: false,
+          predicate: appProps.UIOptions.tools?.library !== false,
           perform: () => {
             if (uiAppState.openSidebar) {
               setAppState({
@@ -568,7 +569,9 @@ function CommandPaletteInner({
           category: DEFAULT_CATEGORIES.tools,
           icon: brainIconThin,
           viewMode: false,
-          predicate: appProps.aiEnabled,
+          predicate:
+            appProps.aiEnabled &&
+            appProps.UIOptions.tools?.textToDiagram !== false,
           perform: () => {
             setAppState((state) => ({
               ...state,
@@ -584,7 +587,9 @@ function CommandPaletteInner({
           category: DEFAULT_CATEGORIES.tools,
           icon: mermaidLogoIcon,
           viewMode: false,
-          predicate: appProps.aiEnabled,
+          predicate:
+            appProps.aiEnabled &&
+            appProps.UIOptions.tools?.mermaidToExcalidraw !== false,
           perform: () => {
             setAppState((state) => ({
               ...state,

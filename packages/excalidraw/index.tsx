@@ -115,8 +115,15 @@ const ExcalidrawBase = (props: ExcalidrawProps) => {
       ...canvasActions,
     },
     tools: {
+      embeddable: props.UIOptions?.tools?.embeddable ?? true,
+      frame: props.UIOptions?.tools?.frame ?? true,
       image: props.UIOptions?.tools?.image ?? true,
+      library: props.UIOptions?.tools?.library ?? true,
+      magicframe: props.UIOptions?.tools?.magicframe ?? true,
+      mermaidToExcalidraw:
+        props.UIOptions?.tools?.mermaidToExcalidraw ?? true,
       sticker: props.UIOptions?.tools?.sticker ?? true,
+      textToDiagram: props.UIOptions?.tools?.textToDiagram ?? true,
     },
   };
 

@@ -328,8 +328,14 @@ export const DEFAULT_UI_OPTIONS: AppProps["UIOptions"] = {
     saveAsImage: true,
   },
   tools: {
+    embeddable: true,
+    frame: true,
     image: true,
+    library: true,
+    magicframe: true,
+    mermaidToExcalidraw: true,
     sticker: true,
+    textToDiagram: true,
   },
 };
 

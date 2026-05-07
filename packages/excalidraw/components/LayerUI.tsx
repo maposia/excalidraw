@@ -48,7 +48,6 @@ import { useEditorInterface, useStylesPanelMode } from "./App";
 import { OverwriteConfirmDialog } from "./OverwriteConfirm/OverwriteConfirm";
 import { sidebarRightIcon } from "./icons";
 import { DefaultSidebar } from "./DefaultSidebar";
-import { TTDDialog } from "./TTDDialog/TTDDialog";
 import { Stats } from "./Stats";
 import ElementLinkDialog from "./ElementLinkDialog";
 import { ErrorDialog } from "./ErrorDialog";
@@ -411,7 +410,8 @@ const LayerUI = ({
               editorInterface.formFactor === "phone",
               appState,
             )}
-            {!appState.viewModeEnabled &&
+            {showLibrary &&
+              !appState.viewModeEnabled &&
               appState.openDialog?.name !== "elementLinkSelector" &&
               // hide button when sidebar docked
               (!isSidebarDocked ||
@@ -451,6 +451,7 @@ const LayerUI = ({
   };
 
   const isSidebarDocked = useAtomValue(isSidebarDockedAtom);
+  const showLibrary = UIOptions.tools?.library !== false;
 
   const layerUIJSX = (
     <>
@@ -462,25 +463,26 @@ const LayerUI = ({
           tunneled away. We only render tunneled components that actually
         have defaults when host do not render anything. */}
       <DefaultMainMenu UIOptions={UIOptions} />
-      <DefaultSidebar.Trigger
-        __fallback
-        icon={sidebarRightIcon}
-        title={capitalizeString(t("toolBar.library"))}
-        onToggle={(open) => {
-          if (open) {
-            trackEvent(
-              "sidebar",
-              `${DEFAULT_SIDEBAR.name} (open)`,
-              `button (${
-                editorInterface.formFactor === "phone" ? "mobile" : "desktop"
-              })`,
-            );
-          }
-        }}
-        tab={DEFAULT_SIDEBAR.defaultTab}
-      />
+      {showLibrary && (
+        <DefaultSidebar.Trigger
+          __fallback
+          icon={sidebarRightIcon}
+          title={capitalizeString(t("toolBar.library"))}
+          onToggle={(open) => {
+            if (open) {
+              trackEvent(
+                "sidebar",
+                `${DEFAULT_SIDEBAR.name} (open)`,
+                `button (${
+                  editorInterface.formFactor === "phone" ? "mobile" : "desktop"
+                })`,
+              );
+            }
+          }}
+          tab={DEFAULT_SIDEBAR.defaultTab}
+        />
+      )}
       <DefaultOverwriteConfirmDialog />
-      {appState.openDialog?.name === "ttd" && <TTDDialog __fallback />}
       {/* ------------------------------------------------------------------ */}
 
       {appState.isLoading && <LoadingMessage delay={250} />}

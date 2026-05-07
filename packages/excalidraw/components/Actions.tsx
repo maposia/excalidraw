@@ -1077,6 +1077,18 @@ export const ShapesSwitcher = ({
   const embeddableToolSelected = activeTool.type === "embeddable";
 
   const { TTDDialogTriggerTunnel } = useTunnels();
+  const isToolVisible = (
+    tool: keyof NonNullable<AppProps["UIOptions"]["tools"]>,
+  ) => UIOptions.tools?.[tool] !== false;
+  const showTextToDiagram =
+    app.props.aiEnabled !== false && isToolVisible("textToDiagram");
+  const showMermaidToExcalidraw = isToolVisible("mermaidToExcalidraw");
+  const showMagicFrame =
+    app.props.aiEnabled !== false &&
+    app.plugins.diagramToCode &&
+    isToolVisible("magicframe");
+  const showGenerationTools =
+    showTextToDiagram || showMermaidToExcalidraw || showMagicFrame;
 
   return (
     <>
@@ -1188,8 +1200,8 @@ export const ShapesSwitcher = ({
         <DropdownMenu.Trigger
           className={clsx("App-toolbar__extra-tools-trigger", {
             "App-toolbar__extra-tools-trigger--selected":
-              frameToolSelected ||
-              embeddableToolSelected ||
+              (frameToolSelected && isToolVisible("frame")) ||
+              (embeddableToolSelected && isToolVisible("embeddable")) ||
               lassoToolSelected ||
               // in collab we're already highlighting the laser button
               // outside toolbar, so let's not highlight extra-tools button
@@ -1202,9 +1214,9 @@ export const ShapesSwitcher = ({
           }}
           title={t("toolBar.extraTools")}
         >
-          {frameToolSelected
+          {frameToolSelected && isToolVisible("frame")
             ? frameToolIcon
-            : embeddableToolSelected
+            : embeddableToolSelected && isToolVisible("embeddable")
             ? EmbedIcon
             : laserToolSelected && !app.props.isCollaborating
             ? laserPointerToolIcon
@@ -1217,23 +1229,27 @@ export const ShapesSwitcher = ({
           onSelect={() => setIsExtraToolsMenuOpen(false)}
           className="App-toolbar__extra-tools-dropdown"
         >
-          <DropdownMenu.Item
-            onSelect={() => app.setActiveTool({ type: "frame" })}
-            icon={frameToolIcon}
-            shortcut={KEYS.F.toLocaleUpperCase()}
-            data-testid="toolbar-frame"
-            selected={frameToolSelected}
-          >
-            {t("toolBar.frame")}
-          </DropdownMenu.Item>
-          <DropdownMenu.Item
-            onSelect={() => app.setActiveTool({ type: "embeddable" })}
-            icon={EmbedIcon}
-            data-testid="toolbar-embeddable"
-            selected={embeddableToolSelected}
-          >
-            {t("toolBar.embeddable")}
-          </DropdownMenu.Item>
+          {isToolVisible("frame") && (
+            <DropdownMenu.Item
+              onSelect={() => app.setActiveTool({ type: "frame" })}
+              icon={frameToolIcon}
+              shortcut={KEYS.F.toLocaleUpperCase()}
+              data-testid="toolbar-frame"
+              selected={frameToolSelected}
+            >
+              {t("toolBar.frame")}
+            </DropdownMenu.Item>
+          )}
+          {isToolVisible("embeddable") && (
+            <DropdownMenu.Item
+              onSelect={() => app.setActiveTool({ type: "embeddable" })}
+              icon={EmbedIcon}
+              data-testid="toolbar-embeddable"
+              selected={embeddableToolSelected}
+            >
+              {t("toolBar.embeddable")}
+            </DropdownMenu.Item>
+          )}
           <DropdownMenu.Item
             onSelect={() => app.setActiveTool({ type: "laser" })}
             icon={laserPointerToolIcon}
@@ -1253,18 +1269,24 @@ export const ShapesSwitcher = ({
               {t("toolBar.lasso")}
             </DropdownMenu.Item>
           )}
-          <div style={{ margin: "6px 0", fontSize: 14, fontWeight: 600 }}>
-            Generate
-          </div>
-          {app.props.aiEnabled !== false && <TTDDialogTriggerTunnel.Out />}
-          <DropdownMenu.Item
-            onSelect={() => app.setOpenDialog({ name: "ttd", tab: "mermaid" })}
-            icon={mermaidLogoIcon}
-            data-testid="toolbar-embeddable"
-          >
-            {t("toolBar.mermaidToExcalidraw")}
-          </DropdownMenu.Item>
-          {app.props.aiEnabled !== false && app.plugins.diagramToCode && (
+          {showGenerationTools && (
+            <div style={{ margin: "6px 0", fontSize: 14, fontWeight: 600 }}>
+              Generate
+            </div>
+          )}
+          {showTextToDiagram && <TTDDialogTriggerTunnel.Out />}
+          {showMermaidToExcalidraw && (
+            <DropdownMenu.Item
+              onSelect={() =>
+                app.setOpenDialog({ name: "ttd", tab: "mermaid" })
+              }
+              icon={mermaidLogoIcon}
+              data-testid="toolbar-embeddable"
+            >
+              {t("toolBar.mermaidToExcalidraw")}
+            </DropdownMenu.Item>
+          )}
+          {showMagicFrame && (
             <DropdownMenu.Item
               onSelect={() => app.onMagicframeToolSelect()}
               icon={MagicIcon}
