@@ -39,6 +39,7 @@ export type BoundElement = Readonly<{
 
 type _ExcalidrawElementBase = Readonly<{
   id: string;
+  authorId?: string | null;
   x: number;
   y: number;
   strokeColor: string;

@@ -2679,6 +2679,7 @@ class App extends React.Component<AppProps, AppState> {
         const padding = 50;
 
         frame = newMagicFrameElement({
+          authorId: this.props.authorId,
           ...FRAME_STYLE,
           x: minX - padding,
           y: minY - padding,
@@ -3756,6 +3757,9 @@ class App extends React.Component<AppProps, AppState> {
         data.programmaticAPI
           ? convertToExcalidrawElements(
               data.elements as ExcalidrawElementSkeleton[],
+              {
+                authorId: this.props.authorId,
+              },
             )
           : data.elements
       ) as readonly ExcalidrawElement[];
@@ -3784,6 +3788,7 @@ class App extends React.Component<AppProps, AppState> {
 
         const elements = convertToExcalidrawElements(skeletonElements, {
           regenerateIds: true,
+          authorId: this.props.authorId,
         });
 
         this.addElementsFromPasteOrLibrary({
@@ -4171,6 +4176,7 @@ class App extends React.Component<AppProps, AppState> {
 
           const element = newTextElement({
             ...textElementProps,
+            authorId: this.props.authorId,
             x: startX,
             y: startY,
             text,
@@ -6270,6 +6276,7 @@ class App extends React.Component<AppProps, AppState> {
     const element =
       existingTextElement ||
       newTextElement({
+        authorId: this.props.authorId,
         x: newTextElementPosition.x,
         y: newTextElementPosition.y,
         strokeColor: this.state.currentItemStrokeColor,
@@ -7903,6 +7910,7 @@ class App extends React.Component<AppProps, AppState> {
     } else if (this.state.activeTool.type === "sticker") {
       const { x: sceneX, y: sceneY } = pointerDownState.origin;
       const sticker = newElement({
+        authorId: this.props.authorId,
         type: "rectangle",
         x: sceneX,
         y: sceneY,
@@ -8871,6 +8879,7 @@ class App extends React.Component<AppProps, AppState> {
     const simulatePressure = event.pressure === 0.5;
 
     const element = newFreeDrawElement({
+      authorId: this.props.authorId,
       type: elementType,
       x: gridX,
       y: gridY,
@@ -8930,6 +8939,7 @@ class App extends React.Component<AppProps, AppState> {
     );
 
     const element = newIframeElement({
+      authorId: this.props.authorId,
       type: "iframe",
       x: gridX,
       y: gridY,
@@ -8983,6 +8993,7 @@ class App extends React.Component<AppProps, AppState> {
     }
 
     const element = newEmbeddableElement({
+      authorId: this.props.authorId,
       type: "embeddable",
       x: gridX,
       y: gridY,
@@ -9032,6 +9043,7 @@ class App extends React.Component<AppProps, AppState> {
     const placeholderSize = 100 / this.state.zoom.value;
 
     return newImageElement({
+      authorId: this.props.authorId,
       type: "image",
       strokeColor: this.state.currentItemStrokeColor,
       backgroundColor: this.state.currentItemBackgroundColor,
@@ -9182,6 +9194,7 @@ class App extends React.Component<AppProps, AppState> {
       const element =
         elementType === "arrow"
           ? newArrowElement({
+              authorId: this.props.authorId,
               type: elementType,
               x: gridX,
               y: gridY,
@@ -9209,6 +9222,7 @@ class App extends React.Component<AppProps, AppState> {
                   : null,
             })
           : newLinearElement({
+              authorId: this.props.authorId,
               type: elementType,
               x: gridX,
               y: gridY,
@@ -9370,6 +9384,7 @@ class App extends React.Component<AppProps, AppState> {
     });
 
     const baseElementAttributes = {
+      authorId: this.props.authorId,
       x: gridX,
       y: gridY,
       strokeColor: this.state.currentItemStrokeColor,
@@ -9423,6 +9438,7 @@ class App extends React.Component<AppProps, AppState> {
     );
 
     const constructorOpts = {
+      authorId: this.props.authorId,
       x: gridX,
       y: gridY,
       opacity: this.state.currentItemOpacity,

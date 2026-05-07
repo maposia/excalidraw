@@ -634,7 +634,7 @@ export interface ExcalidrawProps {
   ) => JSX.Element | null;
   langCode?: Language["code"];
   // canOnlyEditOwnElement: boolean;
-  // authorId: string;
+  authorId?: string | null;
   // isAdmin: boolean;
   // onFocusMe: () => void;
   viewModeEnabled?: boolean;

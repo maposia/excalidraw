@@ -107,6 +107,7 @@ const addFrameLabelsAsTextElements = (
   for (const element of elements) {
     if (isFrameLikeElement(element)) {
       let textElement: Mutable<ExcalidrawTextElement> = newTextElement({
+        authorId: element.authorId,
         x: element.x,
         y: element.y - FRAME_STYLE.nameOffsetY,
         fontFamily: FONT_FAMILY.Helvetica,

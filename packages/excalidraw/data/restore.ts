@@ -265,13 +265,14 @@ const repairBinding = <T extends ExcalidrawArrowElement>(
 };
 
 const restoreElementWithProperties = <
-  T extends Required<Omit<ExcalidrawElement, "customData">> & {
-    customData?: ExcalidrawElement["customData"];
-    /** @deprecated */
-    boundElementIds?: readonly ExcalidrawElement["id"][];
-    /** @deprecated */
-    strokeSharpness?: StrokeRoundness;
-  },
+  T extends Required<Omit<ExcalidrawElement, "customData" | "authorId">> &
+    Pick<ExcalidrawElement, "authorId"> & {
+      customData?: ExcalidrawElement["customData"];
+      /** @deprecated */
+      boundElementIds?: readonly ExcalidrawElement["id"][];
+      /** @deprecated */
+      strokeSharpness?: StrokeRoundness;
+    },
   K extends Pick<T, keyof Omit<Required<T>, keyof ExcalidrawElement>>,
 >(
   element: T,
@@ -291,6 +292,7 @@ const restoreElementWithProperties = <
     versionNonce: element.versionNonce ?? 0,
     index: element.index ?? null,
     isDeleted: element.isDeleted ?? false,
+    ...(element.authorId !== undefined ? { authorId: element.authorId } : null),
     id: element.id || randomId(),
     fillStyle: element.fillStyle || DEFAULT_ELEMENT_PROPS.fillStyle,
     strokeWidth: element.strokeWidth || DEFAULT_ELEMENT_PROPS.strokeWidth,

@@ -223,6 +223,7 @@ const bindTextToContainer = (
   const textElement: ExcalidrawTextElement = newTextElement({
     x: 0,
     y: 0,
+    authorId: textProps.authorId ?? container.authorId,
     textAlign: TEXT_ALIGN.CENTER,
     verticalAlign: VERTICAL_ALIGN.MIDDLE,
     ...textProps,
@@ -508,7 +509,7 @@ class ElementStore {
 
 export const convertToExcalidrawElements = (
   elementsSkeleton: ExcalidrawElementSkeleton[] | null,
-  opts?: { regenerateIds: boolean },
+  opts?: { regenerateIds?: boolean; authorId?: string | null },
 ) => {
   if (!elementsSkeleton) {
     return [];
@@ -524,6 +525,9 @@ export const convertToExcalidrawElements = (
     const originalId = element.id;
     if (opts?.regenerateIds !== false) {
       Object.assign(element, { id: randomId() });
+    }
+    if (opts?.authorId !== undefined && element.authorId === undefined) {
+      Object.assign(element, { authorId: opts.authorId });
     }
 
     switch (element.type) {

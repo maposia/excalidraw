@@ -54,6 +54,7 @@ export type ElementConstructorOpts = MarkOptional<
   Omit<ExcalidrawGenericElement, "id" | "type" | "isDeleted" | "updated">,
   | "width"
   | "height"
+  | "authorId"
   | "angle"
   | "groupIds"
   | "frameId"
@@ -78,6 +79,7 @@ export type ElementConstructorOpts = MarkOptional<
 const _newElementBase = <T extends ExcalidrawElement>(
   type: T["type"],
   {
+    authorId,
     x,
     y,
     strokeColor = DEFAULT_ELEMENT_PROPS.strokeColor,
@@ -125,6 +127,7 @@ const _newElementBase = <T extends ExcalidrawElement>(
   // assign type to guard against excess properties
   const element: Merge<ExcalidrawGenericElement, { type: T["type"] }> = {
     id: rest.id || randomId(),
+    ...(authorId !== undefined ? { authorId } : null),
     type,
     x,
     y,

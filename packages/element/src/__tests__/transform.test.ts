@@ -33,6 +33,35 @@ describe("Test Transform", () => {
     expect(data[0].id).toBe("rect-1");
   });
 
+  it("should assign authorId from opts when skeleton does not define one", () => {
+    const elements = [
+      {
+        type: "rectangle",
+        x: 100,
+        y: 100,
+        id: "author-rect",
+      },
+      {
+        type: "ellipse",
+        x: 100,
+        y: 250,
+        id: "author-ellipse",
+        authorId: "existing-author",
+      },
+    ];
+
+    const data = convertToExcalidrawElements(
+      elements as ExcalidrawElementSkeleton[],
+      {
+        regenerateIds: false,
+        authorId: "current-author",
+      },
+    );
+
+    expect(data[0].authorId).toBe("current-author");
+    expect(data[1].authorId).toBe("existing-author");
+  });
+
   it("should transform regular shapes", () => {
     const elements = [
       {

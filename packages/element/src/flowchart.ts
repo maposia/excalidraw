@@ -255,6 +255,7 @@ const addNewNode = (
 
   const nextNode = newElement({
     type: element.type,
+    authorId: element.authorId,
     x: element.x + offsets.x,
     y: element.y + offsets.y,
     // TODO: extract this to a util
@@ -333,6 +334,7 @@ export const addNewNodes = (
 
     const nextNode = newElement({
       type: startNode.type,
+      authorId: startNode.authorId,
       x: nextX,
       y: nextY,
       // TODO: extract this to a util
@@ -431,6 +433,7 @@ const createBindingArrow = (
 
   const bindingArrow = newArrowElement({
     type: "arrow",
+    authorId: startBindingElement.authorId,
     x: startX,
     y: startY,
     startArrowhead: null,

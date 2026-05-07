@@ -239,6 +239,7 @@ export const actionWrapTextInContainer = register({
     for (const textElement of selectedElements) {
       if (isTextElement(textElement) && !isBoundToContainer(textElement)) {
         const container = newElement({
+          authorId: app.props.authorId,
           type: "rectangle",
           backgroundColor: appState.currentItemBackgroundColor,
           boundElements: [
