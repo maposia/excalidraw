@@ -6,6 +6,9 @@ export const AppMainMenu = React.memo(() => {
     <MainMenu>
       <MainMenu.DefaultItems.ClearCanvas />
       <MainMenu.Separator />
+      <MainMenu.DefaultItems.Export />
+      <MainMenu.DefaultItems.SaveAsImage />
+      <MainMenu.Separator />
       <MainMenu.DefaultItems.ChangeCanvasBackground />
     </MainMenu>
   );

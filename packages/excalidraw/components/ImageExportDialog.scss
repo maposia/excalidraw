@@ -7,6 +7,16 @@
     --ImageExportModal-preview-border: #5c5c5c;
   }
 
+  .ImageExportDialog {
+    .Modal__content {
+      margin-inline-end: 60px;
+
+      @include isMobile {
+        margin-inline-end: 0;
+      }
+    }
+  }
+
   .ImageExportModal {
     display: flex;
     flex-direction: row;
@@ -15,7 +25,7 @@
     user-select: none;
 
     & h3 {
-      font-family: "Assistant";
+      font-family: "Okta Neue", "Assistant";
       font-style: normal;
       font-weight: 700;
       font-size: 1.313rem;
@@ -135,7 +145,7 @@
           flex-direction: row;
           align-items: center;
 
-          font-family: "Assistant";
+          font-family: "Okta Neue", "Assistant";
           font-weight: 600;
           font-size: 1rem;
           line-height: 150%;

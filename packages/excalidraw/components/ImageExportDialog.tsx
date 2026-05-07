@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from "react";
 import {
   DEFAULT_EXPORT_PADDING,
   EXPORT_IMAGE_TYPES,
-  isFirefox,
   EXPORT_SCALES,
   cloneJSON,
 } from "@excalidraw/common";
@@ -12,26 +11,21 @@ import {
 import type { NonDeletedExcalidrawElement } from "@excalidraw/element/types";
 
 import {
-  actionExportWithDarkMode,
   actionChangeExportBackground,
-  actionChangeExportEmbedScene,
   actionChangeExportScale,
   actionChangeProjectName,
 } from "../actions/actionExport";
-import { probablySupportsClipboardBlob } from "../clipboard";
 import { prepareElementsForExport } from "../data";
 import { canvasToBlob } from "../data/blob";
 import { nativeFileSystemSupported } from "../data/filesystem";
-import { useCopyStatus } from "../hooks/useCopiedIndicator";
 
 import { t } from "../i18n";
 import { isSomeElementSelected } from "../scene";
 
-import { copyIcon, downloadIcon, helpIcon } from "./icons";
+import { downloadIcon } from "./icons";
 import { Dialog } from "./Dialog";
 import { RadioGroup } from "./RadioGroup";
 import { Switch } from "./Switch";
-import { Tooltip } from "./Tooltip";
 import { FilledButton } from "./FilledButton";
 
 import "./ImageExportDialog.scss";
@@ -81,29 +75,11 @@ const ImageExportModal = ({
   const [exportWithBackground, setExportWithBackground] = useState(
     appStateSnapshot.exportBackground,
   );
-  const [embedScene, setEmbedScene] = useState(
-    appStateSnapshot.exportEmbedScene,
-  );
   const [exportScale, setExportScale] = useState(appStateSnapshot.exportScale);
 
   const previewRef = useRef<HTMLDivElement>(null);
   const previewRenderRequestIdRef = useRef(0);
   const [renderError, setRenderError] = useState<Error | null>(null);
-
-  const { onCopy, copyStatus, resetCopyStatus } = useCopyStatus();
-
-  useEffect(() => {
-    // if user changes setting right after export to clipboard, reset the status
-    // so they don't have to wait for the timeout to click the button again
-    resetCopyStatus();
-  }, [
-    projectName,
-    exportWithBackground,
-    exportWithDarkMode,
-    exportScale,
-    embedScene,
-    resetCopyStatus,
-  ]);
 
   const { exportedElements, exportingFrame } = prepareElementsForExport(
     elementsSnapshot,
@@ -135,7 +111,7 @@ const ImageExportModal = ({
         exportBackground: exportWithBackground,
         exportWithDarkMode,
         exportScale,
-        exportEmbedScene: embedScene,
+        exportEmbedScene: appStateSnapshot.exportEmbedScene,
       },
       files,
       exportPadding: DEFAULT_EXPORT_PADDING,
@@ -186,7 +162,6 @@ const ImageExportModal = ({
     exportWithBackground,
     exportWithDarkMode,
     exportScale,
-    embedScene,
   ]);
 
   return (
@@ -249,40 +224,6 @@ const ImageExportModal = ({
           />
         </ExportSetting>
         <ExportSetting
-          label={t("imageExportDialog.label.darkMode")}
-          name="exportDarkModeSwitch"
-        >
-          <Switch
-            name="exportDarkModeSwitch"
-            checked={exportWithDarkMode}
-            onChange={(checked) => {
-              actionManager.executeAction(
-                actionExportWithDarkMode,
-                "ui",
-                checked,
-              );
-            }}
-          />
-        </ExportSetting>
-        <ExportSetting
-          label={t("imageExportDialog.label.embedScene")}
-          tooltip={t("imageExportDialog.tooltip.embedScene")}
-          name="exportEmbedSwitch"
-        >
-          <Switch
-            name="exportEmbedSwitch"
-            checked={embedScene}
-            onChange={(checked) => {
-              setEmbedScene(checked);
-              actionManager.executeAction(
-                actionChangeExportEmbedScene,
-                "ui",
-                checked,
-              );
-            }}
-          />
-        </ExportSetting>
-        <ExportSetting
           label={t("imageExportDialog.label.scale")}
           name="exportScale"
         >
@@ -325,26 +266,6 @@ const ImageExportModal = ({
           >
             {t("imageExportDialog.button.exportToSvg")}
           </FilledButton>
-          {(probablySupportsClipboardBlob || isFirefox) && (
-            <FilledButton
-              className="ImageExportModal__settings__buttons__button"
-              label={t("imageExportDialog.title.copyPngToClipboard")}
-              status={copyStatus}
-              onClick={async () => {
-                await onExportImage(
-                  EXPORT_IMAGE_TYPES.clipboard,
-                  exportedElements,
-                  {
-                    exportingFrame,
-                  },
-                );
-                onCopy();
-              }}
-              icon={copyIcon}
-            >
-              {t("imageExportDialog.button.copyPngToClipboard")}
-            </FilledButton>
-          )}
         </div>
       </div>
     </div>
@@ -354,16 +275,10 @@ const ImageExportModal = ({
 type ExportSettingProps = {
   label: string;
   children: React.ReactNode;
-  tooltip?: string;
   name?: string;
 };
 
-const ExportSetting = ({
-  label,
-  children,
-  tooltip,
-  name,
-}: ExportSettingProps) => {
+const ExportSetting = ({ label, children, name }: ExportSettingProps) => {
   return (
     <div className="ImageExportModal__settings__setting" title={label}>
       <label
@@ -371,11 +286,6 @@ const ExportSetting = ({
         className="ImageExportModal__settings__setting__label"
       >
         {label}
-        {tooltip && (
-          <Tooltip label={tooltip} long={true}>
-            {helpIcon}
-          </Tooltip>
-        )}
       </label>
       <div className="ImageExportModal__settings__setting__content">
         {children}
@@ -411,7 +321,12 @@ export const ImageExportDialog = ({
   });
 
   return (
-    <Dialog onCloseRequest={onCloseRequest} size="wide" title={false}>
+    <Dialog
+      className="ImageExportDialog"
+      onCloseRequest={onCloseRequest}
+      size="wide"
+      title={false}
+    >
       <ImageExportModal
         elementsSnapshot={elementsSnapshot}
         appStateSnapshot={appStateSnapshot}
