@@ -11,6 +11,7 @@ export const hasBackground = (type: ElementOrToolType) =>
 
 export const hasStrokeColor = (type: ElementOrToolType) =>
   type === "rectangle" ||
+  type === "sticker" ||
   type === "ellipse" ||
   type === "diamond" ||
   type === "freedraw" ||
@@ -21,6 +22,7 @@ export const hasStrokeColor = (type: ElementOrToolType) =>
 
 export const hasStrokeWidth = (type: ElementOrToolType) =>
   type === "rectangle" ||
+  type === "sticker" ||
   type === "iframe" ||
   type === "embeddable" ||
   type === "ellipse" ||

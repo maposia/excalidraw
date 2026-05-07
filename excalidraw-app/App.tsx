@@ -947,6 +947,10 @@ const ExcalidrawWrapper = () => {
           },
         }}
         langCode={langCode}
+        // canOnlyEditOwnElement
+        // authorId='123123123'
+        // isAdmin
+        // onFocusMe={()=> {}}
         renderCustomStats={renderCustomStats}
         detectScroll={false}
         handleKeyboardGlobally={true}

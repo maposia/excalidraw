@@ -28,6 +28,7 @@ import {
   LineIcon,
   TextIcon,
   ImageIcon,
+  StickerIcon,
   frameToolIcon,
   EmbedIcon,
   laserPointerToolIcon,
@@ -121,6 +122,7 @@ export const MobileToolBar = ({
 
   const frameToolSelected = activeTool.type === "frame";
   const laserToolSelected = activeTool.type === "laser";
+  const stickerToolSelected = activeTool.type === "sticker";
   const embeddableToolSelected = activeTool.type === "embeddable";
 
   const { TTDDialogTriggerTunnel } = useTunnels();
@@ -158,6 +160,7 @@ export const MobileToolBar = ({
   const extraTools = [
     "text",
     "frame",
+    "sticker",
     "embeddable",
     "laser",
     "magicframe",
@@ -181,6 +184,8 @@ export const MobileToolBar = ({
       ? ImageIcon
       : activeTool.type === "frame"
       ? frameToolIcon
+      : activeTool.type === "sticker"
+      ? StickerIcon
       : activeTool.type === "embeddable"
       ? EmbedIcon
       : activeTool.type === "laser"
@@ -438,6 +443,15 @@ export const MobileToolBar = ({
               {t("toolBar.frame")}
             </DropdownMenu.Item>
           )}
+          <DropdownMenu.Item
+            onSelect={() => app.setActiveTool({ type: "sticker" })}
+            icon={StickerIcon}
+            data-testid="toolbar-sticker"
+            selected={stickerToolSelected}
+            shortcut={KEYS.S.toLocaleUpperCase()}
+          >
+            {t("toolBar.sticker")}
+          </DropdownMenu.Item>
           <DropdownMenu.Item
             onSelect={() => app.setActiveTool({ type: "embeddable" })}
             icon={EmbedIcon}

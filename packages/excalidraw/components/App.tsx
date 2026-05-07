@@ -281,6 +281,7 @@ import type {
   IframeData,
   ExcalidrawIframeElement,
   ExcalidrawEmbeddableElement,
+  ExcalidrawRectangleElement,
   Ordered,
   MagicGenerationData,
   ExcalidrawArrowElement,
@@ -7899,6 +7900,31 @@ class App extends React.Component<AppProps, AppState> {
       );
     } else if (this.state.activeTool.type === "custom") {
       setCursorForShape(this.interactiveCanvas, this.state);
+    } else if (this.state.activeTool.type === "sticker") {
+      const { x: sceneX, y: sceneY } = pointerDownState.origin;
+      const sticker = newElement({
+        type: "rectangle",
+        x: sceneX,
+        y: sceneY,
+        width: 200,
+        height: 200,
+        strokeColor: this.state.currentItemStrokeColor,
+        backgroundColor: "#ffec99",
+        // fillStyle: this.state.currentItemFillStyle,
+        // strokeWidth: this.state.currentItemStrokeWidth,
+        // strokeStyle: this.state.currentItemStrokeStyle,
+        // roughness: 0,
+        opacity: this.state.currentItemOpacity,
+        // roundness: this.getCurrentItemRoundness("rectangle"),
+      }) as ExcalidrawRectangleElement;
+
+      this.scene.insertElement(sticker);
+      this.startTextEditing({
+        sceneX: sceneX + sticker.width / 2,
+        sceneY: sceneY + sticker.height / 2,
+        insertAtParentCenter: true,
+        container: sticker,
+      });
     } else if (
       this.state.activeTool.type === TOOL_TYPE.frame ||
       this.state.activeTool.type === TOOL_TYPE.magicframe

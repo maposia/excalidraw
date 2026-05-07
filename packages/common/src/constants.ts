@@ -329,6 +329,7 @@ export const DEFAULT_UI_OPTIONS: AppProps["UIOptions"] = {
   },
   tools: {
     image: true,
+    sticker: true,
   },
 };
 
@@ -458,6 +459,7 @@ export const TOOL_TYPE = {
   eraser: "eraser",
   hand: "hand",
   frame: "frame",
+  sticker: "sticker",
   magicframe: "magicframe",
   embeddable: "embeddable",
   laser: "laser",

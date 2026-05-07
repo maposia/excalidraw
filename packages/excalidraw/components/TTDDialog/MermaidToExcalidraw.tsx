@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useDeferredValue } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import { EDITOR_LS_KEYS, debounce, isDevEnv } from "@excalidraw/common";
 
@@ -72,7 +72,6 @@ const MermaidToExcalidraw = ({
       EditorLocalStorage.get<string>(EDITOR_LS_KEYS.MERMAID_TO_EXCALIDRAW) ||
       MERMAID_EXAMPLE,
   );
-  const deferredText = useDeferredValue(text);
   const [error, setError] = useState<Error | null>(null);
   const [autoFixCandidate, setAutoFixCandidate] = useState<string | null>(null);
 
@@ -80,7 +79,7 @@ const MermaidToExcalidraw = ({
     if (!error?.message) {
       return null;
     }
-    return getMermaidErrorLineNumber(error.message, deferredText);
+    return getMermaidErrorLineNumber(error.message, text);
   })();
 
   const canvasRef = useRef<HTMLDivElement>(null);
@@ -95,7 +94,7 @@ const MermaidToExcalidraw = ({
   useEffect(() => {
     const doRender = async () => {
       try {
-        if (!deferredText.trim()) {
+        if (!text.trim()) {
           resetPreview({ canvasRef, setError });
           return;
         }
@@ -104,7 +103,7 @@ const MermaidToExcalidraw = ({
           data,
           mermaidToExcalidrawLib,
           setError,
-          mermaidDefinition: deferredText,
+          mermaidDefinition: text,
           theme,
         });
 
@@ -121,9 +120,9 @@ const MermaidToExcalidraw = ({
 
     if (isActive) {
       doRender();
-      debouncedSaveMermaidDefinition(deferredText);
+      debouncedSaveMermaidDefinition(text);
     }
-  }, [deferredText, mermaidToExcalidrawLib, isActive, theme]);
+  }, [text, mermaidToExcalidrawLib, isActive, theme]);
 
   useEffect(
     () => () => {
@@ -134,7 +133,7 @@ const MermaidToExcalidraw = ({
 
   useEffect(() => {
     const errorMessage = error?.message ?? "";
-    const sourceText = deferredText;
+    const sourceText = text;
     const shouldTryAutoFix =
       isActive &&
       isMermaidAutoFixableError(errorMessage) &&
@@ -212,7 +211,7 @@ const MermaidToExcalidraw = ({
       cancelled = true;
       clearTimeout(timer);
     };
-  }, [deferredText, error?.message, isActive, mermaidToExcalidrawLib]);
+  }, [text, error?.message, isActive, mermaidToExcalidrawLib]);
 
   const onInsertToEditor = () => {
     insertToEditor({

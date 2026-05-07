@@ -1098,7 +1098,9 @@ export const ShapesSwitcher = ({
           const letter =
             key && capitalizeString(typeof key === "string" ? key : key[0]);
           const shortcut = letter
-            ? `${letter} ${t("helpDialog.or")} ${numericKey}`
+            ? numericKey
+              ? `${letter} ${t("helpDialog.or")} ${numericKey}`
+              : letter
             : `${numericKey}`;
           const keybindingLabel =
             value === "hand" ? undefined : numericKey || letter;

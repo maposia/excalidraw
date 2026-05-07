@@ -154,6 +154,7 @@ export type ToolType =
   | "eraser"
   | "hand"
   | "frame"
+  | "sticker"
   | "magicframe"
   | "embeddable"
   | "laser";
@@ -632,6 +633,10 @@ export interface ExcalidrawProps {
     appState: UIAppState,
   ) => JSX.Element | null;
   langCode?: Language["code"];
+  // canOnlyEditOwnElement: boolean;
+  // authorId: string;
+  // isAdmin: boolean;
+  // onFocusMe: () => void;
   viewModeEnabled?: boolean;
   zenModeEnabled?: boolean;
   gridModeEnabled?: boolean;
@@ -750,6 +755,7 @@ export type UIOptions = Partial<{
   canvasActions: CanvasActions;
   tools: {
     image: boolean;
+    sticker: boolean;
   };
   /**
    * Optionally control the editor form factor and desktop UI mode from the host app.

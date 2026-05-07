@@ -1039,7 +1039,8 @@ describe("tool locking & selection", () => {
         value !== "eraser" &&
         value !== "arrow" &&
         value !== "hand" &&
-        value !== "laser"
+        value !== "laser" &&
+        value !== "sticker"
       ) {
         const element = UI.createElement(value);
         expect(h.state.selectedElementIds[element.id]).not.toBe(true);

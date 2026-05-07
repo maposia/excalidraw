@@ -73,6 +73,10 @@ const ExcalidrawBase = (props: ExcalidrawProps) => {
     renderTopLeftUI,
     renderTopRightUI,
     langCode = defaultLang.code,
+    // canOnlyEditOwnElement,
+    // authorId,
+    // isAdmin,
+    // onFocusMe,
     viewModeEnabled,
     zenModeEnabled,
     gridModeEnabled,
@@ -112,6 +116,7 @@ const ExcalidrawBase = (props: ExcalidrawProps) => {
     },
     tools: {
       image: props.UIOptions?.tools?.image ?? true,
+      sticker: props.UIOptions?.tools?.sticker ?? true,
     },
   };
 
@@ -183,6 +188,10 @@ const ExcalidrawBase = (props: ExcalidrawProps) => {
           renderTopLeftUI={renderTopLeftUI}
           renderTopRightUI={renderTopRightUI}
           langCode={langCode}
+          // canOnlyEditOwnElement={canOnlyEditOwnElement}
+          // authorId={authorId}
+          // isAdmin={isAdmin}
+          // onFocusMe={onFocusMe}
           viewModeEnabled={viewModeEnabled}
           zenModeEnabled={zenModeEnabled}
           gridModeEnabled={gridModeEnabled}
