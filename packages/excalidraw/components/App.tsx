@@ -12548,23 +12548,34 @@ class App extends React.Component<AppProps, AppState> {
         ];
       }
 
+      if (this.props.isAdmin) {
+        return [
+          actionPaste,
+          CONTEXT_MENU_SEPARATOR,
+          actionCopyAsPng,
+          actionCopyAsSvg,
+          copyText,
+          CONTEXT_MENU_SEPARATOR,
+          actionSelectAll,
+          actionUnlockAllElements,
+          CONTEXT_MENU_SEPARATOR,
+          actionToggleGridMode,
+          actionToggleObjectsSnapMode,
+          actionToggleArrowBinding,
+          actionToggleMidpointSnapping,
+          actionToggleZenMode,
+          actionToggleViewMode,
+          actionToggleStats,
+        ];
+      }
+
       return [
         actionPaste,
         CONTEXT_MENU_SEPARATOR,
-        actionCopyAsPng,
-        actionCopyAsSvg,
         copyText,
         CONTEXT_MENU_SEPARATOR,
         actionSelectAll,
         actionUnlockAllElements,
-        CONTEXT_MENU_SEPARATOR,
-        actionToggleGridMode,
-        actionToggleObjectsSnapMode,
-        actionToggleArrowBinding,
-        actionToggleMidpointSnapping,
-        actionToggleZenMode,
-        actionToggleViewMode,
-        actionToggleStats,
       ];
     }
 
@@ -12587,6 +12598,39 @@ class App extends React.Component<AppProps, AppState> {
             actionBringToFront,
           ]
         : [];
+
+    if (!this.props.isAdmin) {
+      return [
+        CONTEXT_MENU_SEPARATOR,
+        actionCut,
+        actionCopy,
+        actionPaste,
+        CONTEXT_MENU_SEPARATOR,
+        actionCopyStyles,
+        actionPasteStyles,
+        CONTEXT_MENU_SEPARATOR,
+        actionGroup,
+        actionTextAutoResize,
+        actionUnbindText,
+        actionBindText,
+        actionWrapTextInContainer,
+        actionUngroup,
+        ...zIndexActions,
+        CONTEXT_MENU_SEPARATOR,
+        actionFlipHorizontal,
+        actionFlipVertical,
+        CONTEXT_MENU_SEPARATOR,
+        actionToggleLinearEditor,
+        CONTEXT_MENU_SEPARATOR,
+        actionLink,
+        actionCopyElementLink,
+        CONTEXT_MENU_SEPARATOR,
+        actionDuplicateSelection,
+        actionToggleElementLock,
+        CONTEXT_MENU_SEPARATOR,
+        actionDeleteSelected,
+      ];
+    }
 
     return [
       CONTEXT_MENU_SEPARATOR,

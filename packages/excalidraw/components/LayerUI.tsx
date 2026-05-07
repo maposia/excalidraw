@@ -462,7 +462,7 @@ const LayerUI = ({
       {/* render component fallbacks. Can be rendered anywhere as they'll be
           tunneled away. We only render tunneled components that actually
         have defaults when host do not render anything. */}
-      <DefaultMainMenu UIOptions={UIOptions} />
+      {app.props.isAdmin && <DefaultMainMenu UIOptions={UIOptions} />}
       {showLibrary && (
         <DefaultSidebar.Trigger
           __fallback

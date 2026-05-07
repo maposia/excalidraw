@@ -75,7 +75,7 @@ const ExcalidrawBase = (props: ExcalidrawProps) => {
     langCode = defaultLang.code,
     // canOnlyEditOwnElement,
     authorId,
-    // isAdmin,
+    isAdmin,
     // onFocusMe,
     viewModeEnabled,
     zenModeEnabled,
@@ -196,7 +196,7 @@ const ExcalidrawBase = (props: ExcalidrawProps) => {
           langCode={langCode}
           // canOnlyEditOwnElement={canOnlyEditOwnElement}
           authorId={authorId}
-          // isAdmin={isAdmin}
+          isAdmin={isAdmin}
           // onFocusMe={onFocusMe}
           viewModeEnabled={viewModeEnabled}
           zenModeEnabled={zenModeEnabled}
