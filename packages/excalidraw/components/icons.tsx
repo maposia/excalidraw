@@ -329,6 +329,19 @@ export const LassoIcon = createIcon(
   { fill: "none", width: 22, height: 22, strokeWidth: 1.25 },
 );
 
+export const FocusIcon = createIcon(
+  <g strokeWidth="1.5">
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <circle cx="12" cy="12" r="9" />
+    <path d="M12 3v4" />
+    <path d="M12 21v-3" />
+    <path d="M3 12h4" />
+    <path d="M21 12h-3" />
+    <path d="M12 12v.01" />
+  </g>,
+  tablerIconProps,
+);
+
 // tabler-icons: square
 export const RectangleIcon = createIcon(
   <g strokeWidth="1.5">

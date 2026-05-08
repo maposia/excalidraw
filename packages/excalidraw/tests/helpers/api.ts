@@ -219,6 +219,7 @@ export class API {
       : never;
     elbowed?: boolean;
     fixedSegments?: FixedSegment[] | null;
+    authorId?: ExcalidrawElement["authorId"];
   }): T extends "arrow" | "line"
     ? ExcalidrawLinearElement
     : T extends "freedraw"
@@ -384,6 +385,9 @@ export class API {
     }
     if (groupIds) {
       element.groupIds = groupIds;
+    }
+    if ("authorId" in rest) {
+      element.authorId = rest.authorId;
     }
     return element as any;
   };

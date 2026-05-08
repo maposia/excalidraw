@@ -34,6 +34,7 @@ import type { GlobalPoint, LineSegment } from "@excalidraw/math/types";
 import type { ElementsMap, ExcalidrawElement } from "@excalidraw/element/types";
 
 import { AnimatedTrail } from "../animated-trail";
+import { canEditElement } from "../elementPermissions";
 
 import type { AnimationFrameHandler } from "../animation-frame-handler";
 
@@ -100,9 +101,14 @@ export class EraserTrail extends AnimatedTrail {
       eraserPath[eraserPath.length - 2],
     );
 
-    const candidateElements = this.app.visibleElements.filter(
-      (el) => !el.locked,
-    );
+    const canEraseElement = (element: ExcalidrawElement) =>
+      !element.locked && canEditElement(element, this.app.props);
+    const canEraseElementById = (id: ExcalidrawElement["id"]) => {
+      const element = this.app.scene.getNonDeletedElementsMap().get(id);
+      return !!element && canEraseElement(element);
+    };
+
+    const candidateElements = this.app.visibleElements.filter(canEraseElement);
 
     const candidateElementsMap = arrayToMap(candidateElements);
 
@@ -125,19 +131,26 @@ export class EraserTrail extends AnimatedTrail {
               shallowestGroupId,
             );
             for (const elementInGroup of elementsInGroup) {
-              this.elementsToErase.delete(elementInGroup.id);
+              if (canEraseElement(elementInGroup)) {
+                this.elementsToErase.delete(elementInGroup.id);
+              }
             }
             this.groupsToErase.delete(shallowestGroupId);
           }
 
           if (isBoundToContainer(element)) {
-            this.elementsToErase.delete(element.containerId);
+            const container = this.app.scene
+              .getNonDeletedElementsMap()
+              .get(element.containerId);
+            if (container && canEraseElement(container)) {
+              this.elementsToErase.delete(element.containerId);
+            }
           }
 
           if (hasBoundTextElement(element)) {
             const boundText = getBoundTextElementId(element);
 
-            if (boundText) {
+            if (boundText && canEraseElementById(boundText)) {
               this.elementsToErase.delete(boundText);
             }
           }
@@ -162,7 +175,9 @@ export class EraserTrail extends AnimatedTrail {
             );
 
             for (const elementInGroup of elementsInGroup) {
-              this.elementsToErase.add(elementInGroup.id);
+              if (canEraseElement(elementInGroup)) {
+                this.elementsToErase.add(elementInGroup.id);
+              }
             }
             this.groupsToErase.add(shallowestGroupId);
           }
@@ -170,13 +185,18 @@ export class EraserTrail extends AnimatedTrail {
           if (hasBoundTextElement(element)) {
             const boundText = getBoundTextElementId(element);
 
-            if (boundText) {
+            if (boundText && canEraseElementById(boundText)) {
               this.elementsToErase.add(boundText);
             }
           }
 
           if (isBoundToContainer(element)) {
-            this.elementsToErase.add(element.containerId);
+            const container = this.app.scene
+              .getNonDeletedElementsMap()
+              .get(element.containerId);
+            if (container && canEraseElement(container)) {
+              this.elementsToErase.add(element.containerId);
+            }
           }
 
           this.elementsToErase.add(element.id);

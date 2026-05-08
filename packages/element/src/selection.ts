@@ -94,6 +94,9 @@ export const getElementsWithinSelection = (
   // TODO remove (this flag is effectively unused AFAIK)
   excludeElementsInFrames: boolean = true,
   boxSelectionMode: BoxSelectionMode = "contain",
+  opts?: {
+    canSelectElement?: (element: NonDeletedExcalidrawElement) => boolean;
+  },
 ): NonDeletedExcalidrawElement[] => {
   const [selectionStartX, selectionStartY, selectionEndX, selectionEndY] =
     getElementAbsoluteCoords(selection, elementsMap);
@@ -132,7 +135,10 @@ export const getElementsWithinSelection = (
   let elementsInSelection: NonDeletedExcalidrawElement[] = [];
 
   for (const element of elements) {
-    if (shouldIgnoreElementFromSelection(element)) {
+    if (
+      shouldIgnoreElementFromSelection(element) ||
+      opts?.canSelectElement?.(element) === false
+    ) {
       continue;
     }
 

@@ -362,6 +362,7 @@ import { restoreAppState, restoreElements } from "../data/restore";
 import { getCenter, getDistance } from "../gesture";
 import { History } from "../history";
 import { defaultLang, getLanguage, languages, setLanguage, t } from "../i18n";
+import { canEditElement } from "../elementPermissions";
 
 import {
   calculateScrollCenter,
@@ -732,6 +733,7 @@ class App extends React.Component<AppProps, AppState> {
       event: PointerEvent,
     ]
   >();
+  onFocusMeEmitter = new Emitter<[]>();
   onUserFollowEmitter = new Emitter<[payload: OnUserFollowedPayload]>();
   onScrollChangeEmitter = new Emitter<
     [scrollX: number, scrollY: number, zoom: AppState["zoom"]]
@@ -781,12 +783,18 @@ class App extends React.Component<AppProps, AppState> {
       onPointerDown: (cb) => this.onPointerDownEmitter.on(cb),
       onPointerUp: (cb) => this.onPointerUpEmitter.on(cb),
       onScrollChange: (cb) => this.onScrollChangeEmitter.on(cb),
+      onFocusMe: (cb) => this.onFocusMeEmitter.on(cb),
       onUserFollow: (cb) => this.onUserFollowEmitter.on(cb),
       onStateChange: this.onStateChange,
       onEvent: this.onEvent,
     };
     return api;
   }
+
+  public focusMe = () => {
+    this.props.onFocusMe?.();
+    this.onFocusMeEmitter.trigger();
+  };
 
   constructor(props: AppProps) {
     super(props);
@@ -6045,6 +6053,7 @@ class App extends React.Component<AppProps, AppState> {
                   !(isTextElement(element) && element.containerId)),
             )
     )
+      .filter((element) => canEditElement(element, this.props))
       .filter((el) => this.hitElement(x, y, el))
       .filter((element) => {
         // hitting a frame's element from outside the frame is not considered a hit
@@ -10343,6 +10352,10 @@ class App extends React.Component<AppProps, AppState> {
                 this.scene.getNonDeletedElementsMap(),
                 false,
                 this.state.boxSelectionMode,
+                {
+                  canSelectElement: (element) =>
+                    canEditElement(element, this.props),
+                },
               )
             : [];
 
@@ -11502,10 +11515,11 @@ class App extends React.Component<AppProps, AppState> {
 
     const elements = this.scene.getElementsIncludingDeleted().map((ele) => {
       if (
-        this.elementsPendingErasure.has(ele.id) ||
-        (ele.frameId && this.elementsPendingErasure.has(ele.frameId)) ||
-        (isBoundToContainer(ele) &&
-          this.elementsPendingErasure.has(ele.containerId))
+        canEditElement(ele, this.props) &&
+        (this.elementsPendingErasure.has(ele.id) ||
+          (ele.frameId && this.elementsPendingErasure.has(ele.frameId)) ||
+          (isBoundToContainer(ele) &&
+            this.elementsPendingErasure.has(ele.containerId)))
       ) {
         didChange = true;
         return newElementWith(ele, { isDeleted: true });

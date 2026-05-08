@@ -73,10 +73,10 @@ const ExcalidrawBase = (props: ExcalidrawProps) => {
     renderTopLeftUI,
     renderTopRightUI,
     langCode = defaultLang.code,
-    // canOnlyEditOwnElement,
+    canOnlyEditOwnElement,
     authorId,
     isAdmin,
-    // onFocusMe,
+    onFocusMe,
     viewModeEnabled,
     zenModeEnabled,
     gridModeEnabled,
@@ -194,10 +194,10 @@ const ExcalidrawBase = (props: ExcalidrawProps) => {
           renderTopLeftUI={renderTopLeftUI}
           renderTopRightUI={renderTopRightUI}
           langCode={langCode}
-          // canOnlyEditOwnElement={canOnlyEditOwnElement}
+          canOnlyEditOwnElement={canOnlyEditOwnElement}
           authorId={authorId}
           isAdmin={isAdmin}
-          // onFocusMe={onFocusMe}
+          onFocusMe={onFocusMe}
           viewModeEnabled={viewModeEnabled}
           zenModeEnabled={zenModeEnabled}
           gridModeEnabled={gridModeEnabled}

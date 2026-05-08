@@ -11,6 +11,7 @@ import { CaptureUpdateAction } from "@excalidraw/element";
 import type { ExcalidrawElement } from "@excalidraw/element/types";
 
 import { selectAllIcon } from "../components/icons";
+import { canEditElement } from "../elementPermissions";
 
 import { register } from "./register";
 
@@ -30,7 +31,8 @@ export const actionSelectAll = register({
         (element) =>
           !element.isDeleted &&
           !(isTextElement(element) && element.containerId) &&
-          !element.locked,
+          !element.locked &&
+          canEditElement(element, app.props),
       )
       .reduce((map: Record<ExcalidrawElement["id"], true>, element) => {
         map[element.id] = true;

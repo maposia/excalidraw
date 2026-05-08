@@ -9,11 +9,8 @@ import { t } from "../i18n";
 
 import { isHandToolActive } from "../appState";
 
-import { useTunnels } from "../context/tunnels";
-
 import { HandButton } from "./HandButton";
 import { ToolButton } from "./ToolButton";
-import DropdownMenu from "./dropdownMenu/DropdownMenu";
 import { ToolPopover } from "./ToolPopover";
 
 import {
@@ -22,19 +19,13 @@ import {
   EraserIcon,
   RectangleIcon,
   ArrowIcon,
-  extraToolsIcon,
   DiamondIcon,
   EllipseIcon,
   LineIcon,
   TextIcon,
   ImageIcon,
-  StickerIcon,
   frameToolIcon,
-  EmbedIcon,
-  laserPointerToolIcon,
   LassoIcon,
-  mermaidLogoIcon,
-  MagicIcon,
 } from "./icons";
 
 import "./ToolIcon.scss";
@@ -95,7 +86,6 @@ export const MobileToolBar = ({
   setAppState,
 }: MobileToolBarProps) => {
   const activeTool = app.state.activeTool;
-  const [isOtherShapesMenuOpen, setIsOtherShapesMenuOpen] = useState(false);
   const [lastActiveGenericShape, setLastActiveGenericShape] = useState<
     "rectangle" | "diamond" | "ellipse"
   >("rectangle");
@@ -122,23 +112,10 @@ export const MobileToolBar = ({
   }, [activeTool.type]);
 
   const frameToolSelected = activeTool.type === "frame";
-  const laserToolSelected = activeTool.type === "laser";
-  const stickerToolSelected = activeTool.type === "sticker";
-  const embeddableToolSelected = activeTool.type === "embeddable";
 
-  const { TTDDialogTriggerTunnel } = useTunnels();
   const isToolVisible = (
     tool: keyof NonNullable<AppProps["UIOptions"]["tools"]>,
   ) => app.props.UIOptions.tools?.[tool] !== false;
-  const showTextToDiagram =
-    app.props.aiEnabled !== false && isToolVisible("textToDiagram");
-  const showMermaidToExcalidraw = isToolVisible("mermaidToExcalidraw");
-  const showMagicFrame =
-    app.props.aiEnabled !== false &&
-    app.plugins.diagramToCode &&
-    isToolVisible("magicframe");
-  const showGenerationTools =
-    showTextToDiagram || showMermaidToExcalidraw || showMagicFrame;
 
   const handleToolChange = (toolType: string, pointerType?: string) => {
     if (app.state.activeTool.type !== toolType) {
@@ -161,52 +138,14 @@ export const MobileToolBar = ({
   const WIDTH = 36;
   const GAP = 4;
 
-  // hand, selection, freedraw, eraser, rectangle, arrow, others
-  const MIN_TOOLS = 7;
+  // hand, selection, freedraw, eraser, rectangle, arrow
+  const MIN_TOOLS = 6;
   const MIN_WIDTH = MIN_TOOLS * WIDTH + (MIN_TOOLS - 1) * GAP;
   const ADDITIONAL_WIDTH = WIDTH + GAP;
 
   const showTextToolOutside = toolbarWidth >= MIN_WIDTH + 1 * ADDITIONAL_WIDTH;
   const showImageToolOutside = toolbarWidth >= MIN_WIDTH + 2 * ADDITIONAL_WIDTH;
   const showFrameToolOutside = toolbarWidth >= MIN_WIDTH + 3 * ADDITIONAL_WIDTH;
-
-  const extraTools = [
-    "text",
-    ...(isToolVisible("frame") ? ["frame"] : []),
-    ...(isToolVisible("sticker") ? ["sticker"] : []),
-    ...(isToolVisible("embeddable") ? ["embeddable"] : []),
-    "laser",
-    ...(isToolVisible("magicframe") ? ["magicframe"] : []),
-  ].filter((tool) => {
-    if (showTextToolOutside && tool === "text") {
-      return false;
-    }
-    if (showImageToolOutside && tool === "image") {
-      return false;
-    }
-    if (showFrameToolOutside && tool === "frame") {
-      return false;
-    }
-    return true;
-  });
-  const extraToolSelected = extraTools.includes(activeTool.type);
-  const extraIcon = extraToolSelected
-    ? activeTool.type === "text"
-      ? TextIcon
-      : activeTool.type === "image"
-      ? ImageIcon
-      : activeTool.type === "frame"
-      ? frameToolIcon
-      : activeTool.type === "sticker"
-      ? StickerIcon
-      : activeTool.type === "embeddable"
-      ? EmbedIcon
-      : activeTool.type === "laser"
-      ? laserPointerToolIcon
-      : activeTool.type === "magicframe"
-      ? MagicIcon
-      : extraToolsIcon
-    : extraToolsIcon;
 
   return (
     <div
@@ -392,129 +331,6 @@ export const MobileToolBar = ({
         />
       )}
 
-      {/* Other Shapes */}
-      <DropdownMenu open={isOtherShapesMenuOpen}>
-        <DropdownMenu.Trigger
-          className={clsx(
-            "App-toolbar__extra-tools-trigger App-toolbar__extra-tools-trigger--mobile",
-            {
-              "App-toolbar__extra-tools-trigger--selected":
-                extraToolSelected || isOtherShapesMenuOpen,
-            },
-          )}
-          onToggle={() => {
-            setIsOtherShapesMenuOpen(!isOtherShapesMenuOpen);
-            setAppState({ openMenu: null, openPopup: null });
-          }}
-          title={t("toolBar.extraTools")}
-          style={{
-            width: WIDTH,
-            height: WIDTH,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          {extraIcon}
-        </DropdownMenu.Trigger>
-        <DropdownMenu.Content
-          onClickOutside={() => setIsOtherShapesMenuOpen(false)}
-          onSelect={() => setIsOtherShapesMenuOpen(false)}
-          className="App-toolbar__extra-tools-dropdown"
-          align="start"
-        >
-          {!showTextToolOutside && (
-            <DropdownMenu.Item
-              onSelect={() => app.setActiveTool({ type: "text" })}
-              icon={TextIcon}
-              shortcut={KEYS.T.toLocaleUpperCase()}
-              data-testid="toolbar-text"
-              selected={activeTool.type === "text"}
-            >
-              {t("toolBar.text")}
-            </DropdownMenu.Item>
-          )}
-
-          {!showImageToolOutside && isToolVisible("image") && (
-            <DropdownMenu.Item
-              onSelect={() => app.setActiveTool({ type: "image" })}
-              icon={ImageIcon}
-              data-testid="toolbar-image"
-              selected={activeTool.type === "image"}
-            >
-              {t("toolBar.image")}
-            </DropdownMenu.Item>
-          )}
-          {!showFrameToolOutside && isToolVisible("frame") && (
-            <DropdownMenu.Item
-              onSelect={() => app.setActiveTool({ type: "frame" })}
-              icon={frameToolIcon}
-              shortcut={KEYS.F.toLocaleUpperCase()}
-              data-testid="toolbar-frame"
-              selected={frameToolSelected}
-            >
-              {t("toolBar.frame")}
-            </DropdownMenu.Item>
-          )}
-          {isToolVisible("sticker") && (
-            <DropdownMenu.Item
-              onSelect={() => app.setActiveTool({ type: "sticker" })}
-              icon={StickerIcon}
-              data-testid="toolbar-sticker"
-              selected={stickerToolSelected}
-              shortcut={KEYS.S.toLocaleUpperCase()}
-            >
-              {t("toolBar.sticker")}
-            </DropdownMenu.Item>
-          )}
-          {isToolVisible("embeddable") && (
-            <DropdownMenu.Item
-              onSelect={() => app.setActiveTool({ type: "embeddable" })}
-              icon={EmbedIcon}
-              data-testid="toolbar-embeddable"
-              selected={embeddableToolSelected}
-            >
-              {t("toolBar.embeddable")}
-            </DropdownMenu.Item>
-          )}
-          <DropdownMenu.Item
-            onSelect={() => app.setActiveTool({ type: "laser" })}
-            icon={laserPointerToolIcon}
-            data-testid="toolbar-laser"
-            selected={laserToolSelected}
-            shortcut={KEYS.K.toLocaleUpperCase()}
-          >
-            {t("toolBar.laser")}
-          </DropdownMenu.Item>
-          {showGenerationTools && (
-            <div style={{ margin: "6px 0", fontSize: 14, fontWeight: 600 }}>
-              Generate
-            </div>
-          )}
-          {showTextToDiagram && <TTDDialogTriggerTunnel.Out />}
-          {showMermaidToExcalidraw && (
-            <DropdownMenu.Item
-              onSelect={() =>
-                app.setOpenDialog({ name: "ttd", tab: "mermaid" })
-              }
-              icon={mermaidLogoIcon}
-              data-testid="toolbar-embeddable"
-            >
-              {t("toolBar.mermaidToExcalidraw")}
-            </DropdownMenu.Item>
-          )}
-          {showMagicFrame && (
-            <DropdownMenu.Item
-              onSelect={() => app.onMagicframeToolSelect()}
-              icon={MagicIcon}
-              data-testid="toolbar-magicframe"
-              badge={<DropdownMenu.Item.Badge>AI</DropdownMenu.Item.Badge>}
-            >
-              {t("toolBar.magicframe")}
-            </DropdownMenu.Item>
-          )}
-        </DropdownMenu.Content>
-      </DropdownMenu>
     </div>
   );
 };

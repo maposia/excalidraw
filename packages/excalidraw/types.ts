@@ -633,10 +633,10 @@ export interface ExcalidrawProps {
     appState: UIAppState,
   ) => JSX.Element | null;
   langCode?: Language["code"];
-  // canOnlyEditOwnElement: boolean;
+  canOnlyEditOwnElement?: boolean;
   authorId?: string | null;
   isAdmin?: boolean;
-  // onFocusMe: () => void;
+  onFocusMe?: () => void;
   viewModeEnabled?: boolean;
   zenModeEnabled?: boolean;
   gridModeEnabled?: boolean;
@@ -803,6 +803,7 @@ export type AppClassProperties = {
   /** static canvas */
   canvas: HTMLCanvasElement;
   focusContainer(): void;
+  focusMe(): void;
   library: Library;
   imageCache: Map<
     FileId,
@@ -1007,6 +1008,7 @@ export interface ExcalidrawImperativeAPI {
   onScrollChange: (
     callback: (scrollX: number, scrollY: number, zoom: Zoom) => void,
   ) => UnsubscribeCallback;
+  onFocusMe: (callback: () => void) => UnsubscribeCallback;
   onUserFollow: (
     callback: (payload: OnUserFollowedPayload) => void,
   ) => UnsubscribeCallback;
