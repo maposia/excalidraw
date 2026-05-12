@@ -4,7 +4,6 @@ import React from "react";
 import {
   CLASSES,
   DEFAULT_SIDEBAR,
-  TOOL_TYPE,
   arrayToMap,
   capitalizeString,
   isShallowEqual,
@@ -46,7 +45,6 @@ import MainMenu from "./main-menu/MainMenu";
 import { ActiveConfirmDialog } from "./ActiveConfirmDialog";
 import { useEditorInterface, useStylesPanelMode } from "./App";
 import { OverwriteConfirmDialog } from "./OverwriteConfirm/OverwriteConfirm";
-import { sidebarRightIcon } from "./icons";
 import { DefaultSidebar } from "./DefaultSidebar";
 import { Stats } from "./Stats";
 import ElementLinkDialog from "./ElementLinkDialog";
@@ -58,7 +56,6 @@ import { HintViewer } from "./HintViewer";
 import { ImageExportDialog } from "./ImageExportDialog";
 import { Island } from "./Island";
 import { JSONExportDialog } from "./JSONExportDialog";
-import { LaserPointerButton } from "./LaserPointerButton";
 import { Toast } from "./Toast";
 
 import "./LayerUI.scss";
@@ -106,7 +103,6 @@ const DefaultMainMenu: React.FC<{
   return (
     <MainMenu __fallback>
       <MainMenu.DefaultItems.LoadScene />
-      <MainMenu.DefaultItems.SaveToActiveFile />
       {/* FIXME we should to test for this inside the item itself */}
       {UIOptions.canvasActions.export && <MainMenu.DefaultItems.Export />}
       {/* FIXME we should to test for this inside the item itself */}
@@ -365,26 +361,6 @@ const LayerUI = ({
                             />
                           </Stack.Row>
                         </Island>
-                        {isCollaborating && (
-                          <Island
-                            style={{
-                              marginLeft: spacing.collabMarginLeft,
-                              alignSelf: "center",
-                              height: "fit-content",
-                            }}
-                          >
-                            <LaserPointerButton
-                              title={t("toolBar.laser")}
-                              checked={
-                                appState.activeTool.type === TOOL_TYPE.laser
-                              }
-                              onChange={() =>
-                                app.setActiveTool({ type: TOOL_TYPE.laser })
-                              }
-                              isMobile
-                            />
-                          </Island>
-                        )}
                       </Stack.Row>
                     </Stack.Col>
                   </div>
@@ -410,14 +386,6 @@ const LayerUI = ({
               editorInterface.formFactor === "phone",
               appState,
             )}
-            {showLibrary &&
-              !appState.viewModeEnabled &&
-              appState.openDialog?.name !== "elementLinkSelector" &&
-              // hide button when sidebar docked
-              (!isSidebarDocked ||
-                appState.openSidebar?.name !== DEFAULT_SIDEBAR.name) && (
-                <tunnels.DefaultSidebarTriggerTunnel.Out />
-              )}
             {shouldShowStats && (
               <Stats
                 app={app}
@@ -451,7 +419,6 @@ const LayerUI = ({
   };
 
   const isSidebarDocked = useAtomValue(isSidebarDockedAtom);
-  const showLibrary = UIOptions.tools?.library !== false;
 
   const layerUIJSX = (
     <>
@@ -463,25 +430,6 @@ const LayerUI = ({
           tunneled away. We only render tunneled components that actually
         have defaults when host do not render anything. */}
       {app.props.isAdmin && <DefaultMainMenu UIOptions={UIOptions} />}
-      {showLibrary && (
-        <DefaultSidebar.Trigger
-          __fallback
-          icon={sidebarRightIcon}
-          title={capitalizeString(t("toolBar.library"))}
-          onToggle={(open) => {
-            if (open) {
-              trackEvent(
-                "sidebar",
-                `${DEFAULT_SIDEBAR.name} (open)`,
-                `button (${
-                  editorInterface.formFactor === "phone" ? "mobile" : "desktop"
-                })`,
-              );
-            }
-          }}
-          tab={DEFAULT_SIDEBAR.defaultTab}
-        />
-      )}
       <DefaultOverwriteConfirmDialog />
       {/* ------------------------------------------------------------------ */}
 

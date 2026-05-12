@@ -24,7 +24,7 @@ import {
   LineIcon,
   TextIcon,
   ImageIcon,
-  frameToolIcon,
+  StickerIcon,
   LassoIcon,
 } from "./icons";
 
@@ -111,7 +111,7 @@ export const MobileToolBar = ({
     }
   }, [activeTool.type]);
 
-  const frameToolSelected = activeTool.type === "frame";
+  const stickerToolSelected = activeTool.type === "sticker";
 
   const isToolVisible = (
     tool: keyof NonNullable<AppProps["UIOptions"]["tools"]>,
@@ -145,7 +145,8 @@ export const MobileToolBar = ({
 
   const showTextToolOutside = toolbarWidth >= MIN_WIDTH + 1 * ADDITIONAL_WIDTH;
   const showImageToolOutside = toolbarWidth >= MIN_WIDTH + 2 * ADDITIONAL_WIDTH;
-  const showFrameToolOutside = toolbarWidth >= MIN_WIDTH + 3 * ADDITIONAL_WIDTH;
+  const showStickerToolOutside =
+    toolbarWidth >= MIN_WIDTH + 3 * ADDITIONAL_WIDTH;
 
   return (
     <div
@@ -316,18 +317,18 @@ export const MobileToolBar = ({
         />
       )}
 
-      {/* Frame Tool */}
-      {showFrameToolOutside && isToolVisible("frame") && (
+      {/* Sticker */}
+      {showStickerToolOutside && isToolVisible("sticker") && (
         <ToolButton
-          className={clsx({ active: frameToolSelected })}
+          className={clsx({ active: stickerToolSelected })}
           type="radio"
-          icon={frameToolIcon}
-          checked={frameToolSelected}
+          icon={StickerIcon}
+          checked={stickerToolSelected}
           name="editor-current-shape"
-          title={`${capitalizeString(t("toolBar.frame"))}`}
-          aria-label={capitalizeString(t("toolBar.frame"))}
-          data-testid="toolbar-frame"
-          onChange={() => handleToolChange("frame")}
+          title={`${capitalizeString(t("toolBar.sticker"))}`}
+          aria-label={capitalizeString(t("toolBar.sticker"))}
+          data-testid="toolbar-sticker"
+          onChange={() => handleToolChange("sticker")}
         />
       )}
 
