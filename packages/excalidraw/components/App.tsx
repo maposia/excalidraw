@@ -313,7 +313,6 @@ import {
   actionSendBackward,
   actionSendToBack,
   actionToggleGridMode,
-  actionToggleStats,
   actionToggleZenMode,
   actionUnbindText,
   actionBindText,
@@ -12558,7 +12557,6 @@ class App extends React.Component<AppProps, AppState> {
           actionToggleGridMode,
           actionToggleZenMode,
           actionToggleViewMode,
-          actionToggleStats,
         ];
       }
 
@@ -12579,7 +12577,6 @@ class App extends React.Component<AppProps, AppState> {
           actionToggleMidpointSnapping,
           actionToggleZenMode,
           actionToggleViewMode,
-          actionToggleStats,
         ];
       }
 
@@ -12590,6 +12587,9 @@ class App extends React.Component<AppProps, AppState> {
         CONTEXT_MENU_SEPARATOR,
         actionSelectAll,
         actionUnlockAllElements,
+        CONTEXT_MENU_SEPARATOR,
+        actionToggleArrowBinding,
+        actionToggleMidpointSnapping,
       ];
     }
 

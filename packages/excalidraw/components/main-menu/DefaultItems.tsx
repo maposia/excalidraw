@@ -14,7 +14,6 @@ import {
   actionToggleMidpointSnapping,
   actionToggleObjectsSnapMode,
   actionToggleSearchMenu,
-  actionToggleStats,
   actionToggleTheme,
   actionToggleZenMode,
 } from "../../actions";
@@ -573,24 +572,6 @@ const PreferencesToggleViewModeItem = () => {
   );
 };
 
-const PreferencesToggleElementPropertiesItem = () => {
-  const { t } = useI18n();
-  const actionManager = useExcalidrawActionManager();
-  const appState = useUIAppState();
-  return (
-    <DropdownMenuItemCheckbox
-      checked={appState.stats.open}
-      shortcut={getShortcutFromShortcutName("stats")}
-      onSelect={(event) => {
-        actionManager.executeAction(actionToggleStats);
-        event.preventDefault();
-      }}
-    >
-      {t("stats.fullTitle")}
-    </DropdownMenuItemCheckbox>
-  );
-};
-
 export const Preferences = ({
   children,
   additionalItems,
@@ -613,7 +594,6 @@ export const Preferences = ({
             <PreferencesToggleGridModeItem />
             <PreferencesToggleZenModeItem />
             <PreferencesToggleViewModeItem />
-            <PreferencesToggleElementPropertiesItem />
             <PreferencesToggleArrowBindingItem />
             <PreferencesToggleMidpointSnappingItem />
           </>
@@ -632,6 +612,5 @@ Preferences.ToggleMidpointSnapping = PreferencesToggleMidpointSnappingItem;
 Preferences.ToggleGridMode = PreferencesToggleGridModeItem;
 Preferences.ToggleZenMode = PreferencesToggleZenModeItem;
 Preferences.ToggleViewMode = PreferencesToggleViewModeItem;
-Preferences.ToggleElementProperties = PreferencesToggleElementPropertiesItem;
 
 Preferences.displayName = "Preferences";

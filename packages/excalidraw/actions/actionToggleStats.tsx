@@ -1,5 +1,3 @@
-import { CODES, KEYS } from "@excalidraw/common";
-
 import { CaptureUpdateAction } from "@excalidraw/element";
 
 import { abacusIcon } from "../components/icons";
@@ -23,6 +21,4 @@ export const actionToggleStats = register({
     };
   },
   checked: (appState) => appState.stats.open,
-  keyTest: (event) =>
-    !event[KEYS.CTRL_OR_CMD] && event.altKey && event.code === CODES.SLASH,
 });
